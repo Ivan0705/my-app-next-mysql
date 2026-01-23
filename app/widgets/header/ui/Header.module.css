@@ -1,0 +1,59 @@
+.Header {
+  background: var(--color-primary-800);
+  color: white;
+  padding: clamp(0.5rem, 2vw, 1rem) 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--color-primary-700);
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition-normal);
+}
+@media (max-width: 720px) {
+  .Header {
+    width: 100%;
+    padding: 0.5rem 0;
+  }
+}
+
+.Header_Container {
+  max-width: min(1200px, 100%);
+  margin: 0 auto;
+  padding: 0 clamp(0.25rem, 3vw, 1rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 720px) {
+  .Header_Container {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.25rem;
+  }
+}
+
+.Header_Logo {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+@media (max-width: 720px) {
+  .Header_Logo {
+    font-size: 1.25rem;
+  }
+}
+
+.Header_Desktop {
+  color: white;
+  padding: 0.375rem 0.75rem;
+
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

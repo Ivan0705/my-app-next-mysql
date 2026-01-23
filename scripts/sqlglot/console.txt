@@ -1,0 +1,21 @@
+# 1. Установите зависимости (если нужно)
+cd scripts/sqlglot
+pip install sqlglot
+cd ../..
+
+# 2. Запустите демо
+python scripts/sqlglot/hybrid_transpiler_demo.py demo
+
+# 3. Конвертируйте пример в PostgreSQL
+python scripts/sqlglot/hybrid_transpiler_demo.py convert postgres
+
+# 4. Конвертируйте пример во все диалекты
+cd scripts/sqlglot
+python hybrid_transpiler_demo.py convert postgres
+python hybrid_transpiler_demo.py convert bigquery
+python hybrid_transpiler_demo.py convert snowflake
+python hybrid_transpiler_demo.py convert oracle
+python hybrid_transpiler_demo.py convert mssql
+python hybrid_transpiler_demo.py convert sqlite
+python hybrid_transpiler_demo.py convert redshift
+python hybrid_transpiler_demo.py all           

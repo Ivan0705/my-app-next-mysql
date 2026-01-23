@@ -1,10 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "downlevelIteration": true,
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "types": ["jest", "node", "electron"],
+    "outDir": "../../dist-electron",
+    "target": "ES5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "forceConsistentCasingInFileNames": false,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -13,15 +18,32 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": ["./*"],
+      "@components/*": ["components/*"],
+      "@lib/*": ["./lib/*"],
+      "@app/*": ["app/*"],
+      "@processes/*": ["processes/*"],
+      "@entities/*": ["entities/*"],
+      "@features/*": ["features/*"],
+      "@widgets/*": ["widgets/*"],
+      "@shared/*": ["shared/*"],
+      "@pages/*": ["pages/*"]
+    },
+    "plugins": [{ "name": "next" }]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    ".next/types/**/*.ts",
+    "middleware.text",
+    "app/entities/projects/api/projects.Handler.text",
+    "app/scripts/**/*",
+    "next-env.d.ts",
+    "types/**/*.d.ts"
+  ],
   "exclude": ["node_modules"]
 }

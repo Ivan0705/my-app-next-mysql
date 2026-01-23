@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Project {
+  project_id   Int            @id @default(autoincrement())
+  title        String         @db.VarChar(150)
+  description  String?
+  technologies String         @db.VarChar(200)
+  image_url    String?        @db.VarChar(255)
+  github_link  String?        @db.VarChar(255)
+  demo_link    String?        @db.VarChar(255)
+  created_at   DateTime       @default(now()) @map("created_at")
+  updated_at   DateTime       @updatedAt @map("updates_at")
+  testimonials Testimonials[]
+  metrics ProjectMetric[]
+
+  @@map("projects")
+}
+
+enum SkillCategory {
+  Frontend
+  Backend
+  Database
+  DevOps
+  Other
+}
+
+model Skill {
+  skill_id    Int           @id @default(autoincrement()) @map("skill_id")
+  name        String        @db.VarChar(50)
+  category    SkillCategory
+  proficiency Int           @default(3)
+
+  @@map("skills")
+}
+
+model Testimonials {
+  testimonial_id  Int      @id @default(autoincrement()) @map("testimonial_id")
+  author_name     String   @db.VarChar(100)
+  author_position String   @db.VarChar(100)
+  content         String?  @db.Text
+  project_id      Int?     @default(3) @map("project_id")
+  created_at      DateTime @default(now()) @map("created_at")
+  project         Project? @relation(fields: [project_id], references: [project_id], onDelete: SetNull)
+
+  @@map("testimonials")
+}
+
+model ProjectMetric{
+  metric_id Int @id @default(autoincrement()) @map("metric_id")
+  project_id Int @map("project_id")
+  metric_date DateTime @map("metric_date")
+  visitors Int
+  conversions Int
+  revenue Float
+  project Project @relation(fields:[project_id], references:[project_id])
+
+  @@map("project_metrics")
+}

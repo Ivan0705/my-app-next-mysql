@@ -1,0 +1,324 @@
+/* Диалектное сравнение - CSS модуль */
+.DialectComparisonView {
+  background: linear-gradient(
+    to right,
+    var(--color-blue-50, #eff6ff),
+    var(--color-purple-50, #faf5ff)
+  );
+  border: 1px solid var(--color-blue-200, #bfdbfe);
+  border-radius: var(--radius-lg, 0.5rem);
+  padding: var(--spacing-lg, 1rem);
+  margin-bottom: var(--spacing-lg, 1rem);
+}
+
+.DialectComparisonView__Header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm, 0.5rem);
+  font-weight: 500;
+  color: var(--color-blue-900, #1e3a8a);
+  margin-bottom: var(--spacing-md, 0.75rem);
+}
+
+.DialectComparisonView__Icon {
+  font-size: var(--font-size-lg, 1.25rem);
+}
+
+.DialectComparisonView__Count {
+  font-size: var(--font-size-xs, 0.75rem);
+  background-color: var(--color-blue-100, #dbeafe);
+  color: var(--color-blue-800, #1e40af);
+  padding: var(--spacing-xs, 0.25rem) var(--spacing-sm, 0.5rem);
+  border-radius: var(--radius-md, 0.375rem);
+  margin-left: var(--spacing-sm, 0.5rem);
+}
+
+.DialectComparisonView__List {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md, 0.75rem);
+  max-height: 16rem;
+  overflow-y: auto;
+}
+
+/* Карточка сравнения */
+.DialectComparisonView__Card {
+  background-color: var(--color-white, #ffffff);
+  border-radius: var(--radius-lg, 0.5rem);
+  padding: var(--spacing-md, 0.75rem);
+  border: 2px solid var(--color-blue-200, #bfdbfe);
+  transition: all var(--transition-normal, 0.2s ease);
+  cursor: pointer;
+}
+
+.DialectComparisonView__Card__Highlighted {
+  border-color: var(--color-blue-500, #3b82f6);
+  background-color: var(--color-blue-50, #eff6ff);
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+  transform: scale(1.05);
+}
+
+.DialectComparisonView__Card:hover:not(.DialectComparisonView__Card__Highlighted) {
+  border-color: var(--color-blue-400, #60a5fa);
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+}
+
+/* Внутреннее содержимое карточки */
+.DialectComparisonView__CardContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-sm, 0.5rem);
+}
+
+.DialectComparisonView__CardInner {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md, 0.75rem);
+  flex: 1;
+}
+
+/* Визуальная связь */
+.DialectComparisonView__Connection {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm, 0.5rem);
+  min-width: 0;
+  flex: 1;
+}
+
+.DialectComparisonView__ConnectionVisual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.DialectComparisonView__ConnectionDot {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--color-blue-100, #dbeafe);
+  border: 2px solid var(--color-blue-300, #93c5fd);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.DialectComparisonView__ConnectionSymbol {
+  color: var(--color-blue-600, #2563eb);
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.DialectComparisonView__ConnectionLine {
+  width: 0.125rem;
+  height: 1rem;
+  background-color: var(--color-blue-300, #93c5fd);
+}
+
+/* Ключевые слова */
+.DialectComparisonView__Keywords {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm, 0.5rem);
+  flex: 1;
+}
+
+.DialectComparisonView__KeywordBox {
+  text-align: center;
+  padding: var(--spacing-sm, 0.5rem);
+  border-radius: var(--radius-md, 0.375rem);
+  border: 2px solid;
+}
+
+.DialectComparisonView__KeywordBox__Original {
+  background-color: var(--color-red-50, #fef2f2);
+  border-color: var(--color-red-200, #fecaca);
+  color: var(--color-red-700, #b91c1c);
+}
+
+.DialectComparisonView__KeywordBox__OriginalHighlighted {
+  background-color: var(--color-red-100, #fee2e2);
+  border-color: var(--color-red-400, #f87171);
+  color: var(--color-red-800, #991b1b);
+}
+
+.DialectComparisonView__KeywordBox__Converted {
+  background-color: var(--color-green-50, #f0fdf4);
+  border-color: var(--color-green-200, #bbf7d0);
+  color: var(--color-green-700, #15803d);
+}
+
+.DialectComparisonView__KeywordBox__ConvertedHighlighted {
+  background-color: var(--color-green-100, #dcfce7);
+  border-color: var(--color-green-400, #4ade80);
+  color: var(--color-green-800, #166534);
+}
+
+.DialectComparisonView__Keyword {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: bold;
+}
+
+.DialectComparisonView__DialectLabel {
+  font-size: var(--font-size-xs, 0.75rem);
+  margin-top: var(--spacing-xs, 0.25rem);
+}
+
+.DialectComparisonView__OriginalKeyword {
+  color: var(--color-red-600, #dc2626);
+}
+
+.DialectComparisonView__ConvertedKeyword {
+  color: var(--color-green-600, #16a34a);
+}
+
+.DialectComparisonView__LineInfo {
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--color-gray-500, #6b7280);
+  background-color: var(--color-gray-100, #f3f4f6);
+  padding: var(--spacing-xs, 0.25rem) var(--spacing-sm, 0.5rem);
+  border-radius: var(--radius-md, 0.375rem);
+  flex-shrink: 0;
+}
+
+/* Описание */
+.DialectComparisonView__Description {
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-blue-700, #1d4ed8);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm, 0.5rem);
+}
+
+.DialectComparisonView__DescriptionIcon {
+  color: var(--color-blue-500, #3b82f6);
+}
+
+/* Маппинг */
+.DialectComparisonView__Mapping {
+  margin-top: var(--spacing-sm, 0.5rem);
+  padding: var(--spacing-sm, 0.5rem);
+  background-color: var(--color-blue-50, #eff6ff);
+  border-radius: var(--radius-md, 0.375rem);
+  border: 1px solid var(--color-blue-200, #bfdbfe);
+}
+
+.DialectComparisonView__MappingLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm, 0.5rem);
+  font-size: var(--font-size-xs, 0.75rem);
+}
+
+.DialectComparisonView__MappingText {
+  font-weight: 500;
+  color: var(--color-blue-600, #2563eb);
+}
+
+.DialectComparisonView__OriginalWord {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: var(--color-red-600, #dc2626);
+}
+
+.DialectComparisonView__Arrow {
+  color: var(--color-blue-400, #60a5fa);
+}
+
+.DialectComparisonView__ConvertedWord {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: var(--color-green-600, #16a34a);
+}
+
+.DialectComparisonView__MappingHint {
+  margin-top: var(--spacing-xs, 0.25rem);
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--color-blue-500, #3b82f6);
+}
+
+/* Легенда */
+.DialectComparisonView__Legend {
+  margin-top: var(--spacing-md, 0.75rem);
+  padding-top: var(--spacing-md, 0.75rem);
+  border-top: 1px solid var(--color-blue-200, #bfdbfe);
+}
+
+.DialectComparisonView__LegendGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg, 1rem);
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--color-gray-600, #4b5563);
+}
+
+.DialectComparisonView__LegendGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm, 0.5rem);
+}
+
+.DialectComparisonView__LegendItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm, 0.5rem);
+}
+
+.DialectComparisonView__LegendIndicator {
+  width: 1rem;
+  height: 1rem;
+  border-radius: var(--radius-sm, 0.25rem);
+  border: 2px solid;
+}
+
+.DialectComparisonView__LegendIndicator__Original {
+  background-color: var(--color-red-50, #fef2f2);
+  border-color: var(--color-red-300, #fca5a5);
+}
+
+.DialectComparisonView__LegendIndicator__Converted {
+  background-color: var(--color-green-50, #f0fdf4);
+  border-color: var(--color-green-300, #86efac);
+}
+
+.DialectComparisonView__LegendIndicator__Dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background-color: var(--color-blue-400, #60a5fa);
+}
+
+.DialectComparisonView__LegendIndicator__Line {
+  width: 0.75rem;
+  height: 0.125rem;
+  background-color: var(--color-blue-400, #60a5fa);
+}
+
+/* Мобильная адаптация */
+@media (max-width: 768px) {
+  .DialectComparisonView__CardInner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .DialectComparisonView__Connection {
+    justify-content: center;
+  }
+
+  .DialectComparisonView__Keywords {
+    grid-template-columns: 1fr;
+  }
+
+  .DialectComparisonView__LegendGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .DialectComparisonView {
+    padding: var(--spacing-md, 0.75rem);
+  }
+
+  .DialectComparisonView__LineInfo {
+    align-self: flex-start;
+  }
+}

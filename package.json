@@ -6,19 +6,104 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "run": "npm run dev",
+    "lint": "next lint",
+    "studio": "prisma studio",
+    "migrate": "prisma migrate dev",
+    "test-db": "ts-node --transpile-only scripts/test-connection.ts",
+    "reset-db": "prisma migrate reset",
+    "build-db-script": "tsc scripts/test-connection.ts --outDir dist",
+    "prisma:generate": "prisma generate",
+    "prisma format": "prisma format dev",
+    "clean": "powershell -command \"Remove-Item -Recurse -Force node_modules, .next; Remove-Item -Force package-lock.json\"",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --runInBand --detectOpenHandles",
+    "build:electron": "tsc -p tsconfig.electron.json",
+    "electron": "npm run build:electron && electron dist-electron/main/main.js",
+    "electron:dev": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && npm run build:electron && electron dist-electron/main/main.js\"",
+    "electron:start": "electron dist-electron/main/main.js",
+    "electron:simple": "npm run build:electron && electron dist-electron/main/main.js",
+    "dist": "npm run build && npm run build:electron && electron-builder --publish=never",
+
+    "test:postgres": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert postgres",
+    "test:bigquery": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert bigquery",
+    "test:snowflake": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert snowflake",
+    "test:oracle": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert oracle",
+    "test:mssql": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert mssql",
+    "test:sqlite": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert sqlite",
+    "test:redshift": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert redshift",
+    "test:all": "cd scripts/sqlglot && python hybrid_transpiler_demo.py all"
   },
   "dependencies": {
+    "@auth/core": "^0.40.0",
+    "@auth/prisma-adapter": "^2.10.0",
+    "@prisma/client": "^6.11.1",
+    "@types/dompurify": "^3.2.0",
+    "@upstash/ratelimit": "^2.0.5",
+    "@upstash/redis": "^1.35.1",
+    "dompurify": "^3.2.6",
+    "electron-is-dev": "^3.0.1",
+    "iconv-lite": "^0.7.0",
+    "jsdom": "^26.1.0",
+    "mysql2": "^3.14.1",
+    "next": "^15.3.6",
+    "next-auth": "^5.0.0-beta.29",
+    "prisma": "^6.11.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.3.5"
+    "recharts": "^3.1.0",
+    "zod": "^4.0.5",
+    "zustand": "^5.0.7"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
+    "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6.7.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/electron": "^1.6.12",
+    "@types/jest": "^30.0.0",
+    "@types/jsdom": "^21.1.7",
+    "@types/node": "^20.19.17",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4"
+    "@vitejs/plugin-react": "^4.6.0",
+    "concurrently": "^9.2.1",
+    "electron": "^39.2.3",
+    "electron-builder": "^26.0.12",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
+    "tailwindcss": "^4",
+    "ts-jest": "^29.4.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "tsconfig-paths-jest": "^0.0.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vite": "^7.0.4",
+    "wait-on": "^9.0.3"
+  },
+  "build": {
+    "appId": "com.yourcompany.yourapp",
+    "productName": "Your Next Electron App",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist-electron/**/*",
+      "out/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   }
 }

@@ -1,0 +1,778 @@
+/* SQL File Manager - CSS модуль */
+.SQLFileManager {
+  min-height: 100vh;
+  background-color: var(--color-gray-50, #f9fafb);
+  padding: var(--spacing-xl, 1.5rem);
+}
+
+.SQLFileManager__Container {
+  max-width: 80rem; /* 7xl */
+  margin: 0 auto;
+}
+
+.SQLFileManager__Header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl, 2rem);
+}
+
+.SQLFileManager__Title {
+  font-size: var(--font-size-2xl, 1.5rem);
+  font-weight: bold;
+  color: var(--color-gray-900, #111827);
+  margin-bottom: var(--spacing-md, 1rem);
+}
+
+.SQLFileManager__Subtitle {
+  color: var(--color-gray-600, #4b5563);
+}
+
+/* Настройки конвертации */
+.SQLFileManager__Settings {
+  background-color: var(--color-white, #ffffff);
+  border-radius: var(--radius-lg, 0.5rem);
+  box-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+  padding: var(--spacing-xl, 1.5rem);
+  margin-bottom: var(--spacing-xl, 1.5rem);
+}
+
+.SQLFileManager__SettingsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl, 1.5rem);
+}
+
+@media (min-width: 768px) {
+  .SQLFileManager__SettingsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.SQLFileManager__SelectWrapper {
+  margin-bottom: var(--spacing-sm, 0.5rem);
+}
+
+.SQLFileManager__SelectLabel {
+  display: block;
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: 500;
+  color: var(--color-gray-700, #374151);
+  margin-bottom: var(--spacing-xs, 0.25rem);
+}
+
+.SQLFileManager__Select {
+  width: 100%;
+  padding: var(--spacing-md, 0.75rem);
+  border: 1px solid var(--color-gray-300, #d1d5db);
+  border-radius: var(--radius-lg, 0.5rem);
+  background-color: var(--color-white, #ffffff);
+  color: var(--color-gray-900, #111827);
+  font-size: var(--font-size-md, 1rem);
+  transition: border-color var(--transition-fast, 0.15s ease),
+    box-shadow var(--transition-fast, 0.15s ease);
+}
+
+.SQLFileManager__Select:focus {
+  outline: none;
+  border-color: var(--color-blue-500, #3b82f6);
+  box-shadow: 0 0 0 2px var(--color-blue-100, #dbeafe);
+}
+
+/* Загрузка файлов */
+.SQLFileManager__UploadSection {
+  background-color: var(--color-white, #ffffff);
+  border-radius: var(--radius-lg, 0.5rem);
+  box-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+  padding: var(--spacing-xl, 1.5rem);
+  margin-bottom: var(--spacing-xl, 1.5rem);
+}
+
+.SQLFileManager__UploadHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg, 1rem);
+}
+
+.SQLFileManager__UploadTitle {
+  font-size: var(--font-size-xl, 1.25rem);
+  font-weight: 600;
+  color: var(--color-gray-900, #111827);
+}
+
+.SQLFileManager__ClearButton {
+  padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 1rem);
+  background-color: var(--color-red-100, #fee2e2);
+  color: var(--color-red-700, #b91c1c);
+  border: none;
+  border-radius: var(--radius-lg, 0.5rem);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-fast, 0.15s ease);
+}
+
+.SQLFileManager__ClearButton:hover {
+  background-color: var(--color-red-200, #fecaca);
+}
+
+.SQLFileManager__FileInput {
+  width: 100%;
+  padding: var(--spacing-md, 0.75rem);
+  border: 2px dashed var(--color-gray-300, #d1d5db);
+  border-radius: var(--radius-lg, 0.5rem);
+  background-color: var(--color-white, #ffffff);
+  cursor: pointer;
+  transition: border-color var(--transition-fast, 0.15s ease);
+}
+
+.SQLFileManager__FileInput:hover {
+  border-color: var(--color-blue-400, #60a5fa);
+}
+
+.SQLFileManager__FileInputLabel {
+  display: block;
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-gray-500, #6b7280);
+  margin-top: var(--spacing-xs, 0.25rem);
+}
+
+/* Уведомления */
+.SQLFileManager__Notification {
+  border-radius: var(--radius-lg, 0.5rem);
+  padding: var(--spacing-lg, 1rem);
+  margin-bottom: var(--spacing-xl, 1.5rem);
+}
+
+.SQLFileManager__Notification__Success {
+  background-color: var(--color-green-50, #f0fdf4);
+  border: 1px solid var(--color-green-200, #bbf7d0);
+  color: var(--color-green-800, #166534);
+}
+
+.SQLFileManager__Notification__Error {
+  background-color: var(--color-red-50, #fef2f2);
+  border: 1px solid var(--color-red-200, #fecaca);
+  color: var(--color-red-800, #991b1b);
+}
+
+.SQLFileManager__NotificationContent {
+  display: flex;
+  align-items: center;
+}
+
+.SQLFileManager__NotificationIcon {
+  margin-right: var(--spacing-sm, 0.5rem);
+  font-size: var(--font-size-lg, 1.125rem);
+}
+
+/* Быстрый анализ */
+.SQLFileManager__QuickAnalysis {
+  background-color: var(--color-white, #ffffff);
+  border-radius: var(--radius-lg, 0.5rem);
+  box-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+  padding: var(--spacing-lg, 1rem);
+  margin-bottom: var(--spacing-xl, 1.5rem);
+}
+
+.SQLFileManager__AnalysisTitle {
+  font-weight: 500;
+  color: var(--color-gray-900, #111827);
+  margin-bottom: var(--spacing-md, 0.75rem);
+}
+
+.SQLFileManager__AnalysisGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg, 1rem);
+}
+
+@media (min-width: 768px) {
+  .SQLFileManager__AnalysisGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.SQLFileManager__AnalysisCard {
+  background-color: var(--color-blue-50, #eff6ff);
+  padding: var(--spacing-md, 0.75rem);
+  border-radius: var(--radius-lg, 0.5rem);
+}
+
+.SQLFileManager__AnalysisCard__Green {
+  background-color: var(--color-green-50, #f0fdf4);
+}
+
+.SQLFileManager__AnalysisCard__Purple {
+  background-color: var(--color-purple-50, #faf5ff);
+}
+
+.SQLFileManager__AnalysisCard__Orange {
+  background-color: var(--color-orange-50, #fff7ed);
+}
+
+.SQLFileManager__AnalysisValue {
+  font-size: var(--font-size-lg, 1.125rem);
+  font-weight: bold;
+  color: var(--color-blue-600, #2563eb);
+  margin-bottom: var(--spacing-xs, 0.25rem);
+}
+
+.SQLFileManager__AnalysisValue__Green {
+  color: var(--color-green-600, #059669);
+}
+
+.SQLFileManager__AnalysisValue__Purple {
+  color: var(--color-purple-600, #9333ea);
+}
+
+.SQLFileManager__AnalysisValue__Orange {
+  color: var(--color-orange-600, #ea580c);
+}
+
+.SQLFileManager__AnalysisLabel {
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-blue-800, #1e40af);
+}
+
+.SQLFileManager__AnalysisLabel__Green {
+  color: var(--color-green-800, #166534);
+}
+
+.SQLFileManager__AnalysisLabel__Purple {
+  color: var(--color-purple-800, #6b21a8);
+}
+
+.SQLFileManager__AnalysisLabel__Orange {
+  color: var(--color-orange-800, #9a3412);
+}
+
+/* Список файлов */
+.SQLFileManager__FilesSection {
+  background-color: var(--color-white, #ffffff);
+  border-radius: var(--radius-lg, 0.5rem);
+  box-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+  padding: var(--spacing-xl, 1.5rem);
+  margin-bottom: var(--spacing-xl, 1.5rem);
+}
+
+.SQLFileManager__FilesTitle {
+  font-size: var(--font-size-lg, 1.125rem);
+  font-weight: 600;
+  color: var(--color-gray-900, #111827);
+  margin-bottom: var(--spacing-lg, 1rem);
+}
+
+.SQLFileManager__FilesList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md, 0.75rem);
+  max-height: 16rem;
+  overflow-y: auto;
+}
+
+.SQLFileManager__EmptyFiles {
+  color: var(--color-gray-500, #6b7280);
+  text-align: center;
+  padding: var(--spacing-xl, 2rem) 0;
+}
+
+/* Элемент файла */
+.SQLFileManager__FileItem {
+  padding: var(--spacing-md, 0.75rem);
+  border: 1px solid;
+  border-radius: var(--radius-lg, 0.5rem);
+  cursor: pointer;
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.SQLFileManager__FileItem__Default {
+  border-color: var(--color-gray-200, #e5e7eb);
+  background-color: var(--color-white, #ffffff);
+}
+
+.SQLFileManager__FileItem__Default:hover {
+  border-color: var(--color-gray-300, #d1d5db);
+}
+
+.SQLFileManager__FileItem__SelectedOriginal {
+  border-color: var(--color-blue-500, #3b82f6);
+  background-color: var(--color-blue-50, #eff6ff);
+}
+
+.SQLFileManager__FileItem__SelectedConverted {
+  border-color: var(--color-green-500, #10b981);
+  background-color: var(--color-green-50, #f0fdf4);
+}
+
+.SQLFileManager__FileContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.SQLFileManager__FileInfo {
+  flex: 1;
+}
+
+.SQLFileManager__FileHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm, 0.5rem);
+  margin-bottom: var(--spacing-xs, 0.25rem);
+}
+
+.SQLFileManager__FileIcon {
+  font-size: var(--font-size-lg, 1.125rem);
+}
+
+.SQLFileManager__FileName {
+  font-weight: 500;
+  color: var(--color-gray-900, #111827);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.SQLFileManager__DialectSelect {
+  width: 100%;
+  padding: var(--spacing-xs, 0.25rem);
+  font-size: var(--font-size-xs, 0.75rem);
+  border: 1px solid var(--color-gray-300, #d1d5db);
+  border-radius: var(--radius-md, 0.375rem);
+  background-color: var(--color-white, #ffffff);
+  color: var(--color-gray-900, #111827);
+}
+
+.SQLFileManager__DialectSelect:focus {
+  outline: none;
+  border-color: var(--color-blue-500, #3b82f6);
+  box-shadow: 0 0 0 1px var(--color-blue-100, #dbeafe);
+}
+
+.SQLFileManager__FileMeta {
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-gray-500, #6b7280);
+}
+
+.SQLFileManager__RemoveButton {
+  padding: var(--spacing-xs, 0.25rem) var(--spacing-sm, 0.5rem);
+  background-color: var(--color-red-100, #fee2e2);
+  color: var(--color-red-700, #b91c1c);
+  border: none;
+  border-radius: var(--radius-md, 0.375rem);
+  font-size: var(--font-size-xs, 0.75rem);
+  cursor: pointer;
+  transition: background-color var(--transition-fast, 0.15s ease);
+}
+
+.SQLFileManager__RemoveButton:hover {
+  background-color: var(--color-red-200, #fecaca);
+}
+
+/* Детали файла */
+.SQLFileManager__FileDetails {
+  background-color: var(--color-white, #ffffff);
+  border-radius: var(--radius-lg, 0.5rem);
+  box-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+  padding: var(--spacing-xl, 1.5rem);
+}
+
+.SQLFileManager__FileHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xl, 1.5rem);
+}
+
+.SQLFileManager__FileTitle {
+  font-size: var(--font-size-lg, 1.125rem);
+  font-weight: 600;
+  color: var(--color-gray-900, #111827);
+}
+
+.SQLFileManager__FileTitleContent {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm, 0.5rem);
+}
+
+.SQLFileManager__FileDialectBadge {
+  padding: var(--spacing-xs, 0.25rem) var(--spacing-sm, 0.5rem);
+  font-size: var(--font-size-xs, 0.75rem);
+  border-radius: var(--radius-md, 0.375rem);
+}
+
+.SQLFileManager__FileDialectBadge__Original {
+  background-color: var(--color-blue-100, #dbeafe);
+  color: var(--color-blue-800, #1e40af);
+}
+
+.SQLFileManager__FileDialectBadge__Converted {
+  background-color: var(--color-green-100, #dcfce7);
+  color: var(--color-green-800, #166534);
+}
+
+.SQLFileManager__ActionButtons {
+  display: flex;
+  gap: var(--spacing-sm, 0.5rem);
+}
+
+.SQLFileManager__ActionButton {
+  padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 1rem);
+  border: none;
+  border-radius: var(--radius-lg, 0.5rem);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-fast, 0.15s ease);
+}
+
+.SQLFileManager__ActionButton__Convert {
+  background-color: var(--color-green-600, #059669);
+  color: var(--color-white, #ffffff);
+}
+
+.SQLFileManager__ActionButton__Convert:hover:not(:disabled) {
+  background-color: var(--color-green-700, #047857);
+}
+
+.SQLFileManager__ActionButton__Convert:disabled {
+  background-color: var(--color-gray-400, #9ca3af);
+  cursor: not-allowed;
+}
+
+.SQLFileManager__ActionButton__Save {
+  background-color: var(--color-purple-600, #9333ea);
+  color: var(--color-white, #ffffff);
+}
+
+.SQLFileManager__ActionButton__Save:hover {
+  background-color: var(--color-purple-700, #7e22ce);
+}
+
+/* Конвертация */
+.SQLFileManager__ConversionReport {
+  background-color: var(--color-yellow-50, #fefce8);
+  border: 1px solid var(--color-yellow-200, #fde047);
+  border-radius: var(--radius-lg, 0.5rem);
+  padding: var(--spacing-lg, 1rem);
+  margin-bottom: var(--spacing-xl, 1.5rem);
+}
+
+.SQLFileManager__ReportTitle {
+  font-weight: 500;
+  color: var(--color-yellow-800, #854d0e);
+  margin-bottom: var(--spacing-sm, 0.5rem);
+}
+
+.SQLFileManager__WarningsList {
+  margin-bottom: var(--spacing-md, 0.75rem);
+}
+
+.SQLFileManager__WarningLabel {
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: 500;
+  color: var(--color-yellow-700, #a16207);
+  margin-bottom: var(--spacing-xs, 0.25rem);
+}
+
+.SQLFileManager__WarningItem {
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-yellow-600, #ca8a04);
+  list-style-type: disc;
+  margin-left: var(--spacing-lg, 1rem);
+}
+
+.SQLFileManager__CompatibilityScore {
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-yellow-700, #a16207);
+}
+
+/* Сравнение */
+.SQLFileManager__ComparisonGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl, 1.5rem);
+  margin-bottom: var(--spacing-xl, 1.5rem);
+}
+
+@media (min-width: 1280px) {
+  .SQLFileManager__ComparisonGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.SQLFileManager__ComparisonColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.SQLFileManager__ComparisonHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-sm, 0.5rem);
+}
+
+.SQLFileManager__ComparisonTitle {
+  font-weight: 500;
+  color: var(--color-gray-900, #111827);
+}
+
+.SQLFileManager__ComparisonBadge {
+  padding: var(--spacing-xs, 0.25rem) var(--spacing-sm, 0.5rem);
+  font-size: var(--font-size-xs, 0.75rem);
+  border-radius: var(--radius-md, 0.375rem);
+}
+
+.SQLFileManager__ComparisonBadge__Source {
+  background-color: var(--color-red-100, #fee2e2);
+  color: var(--color-red-800, #991b1b);
+}
+
+.SQLFileManager__ComparisonBadge__Target {
+  background-color: var(--color-green-100, #dcfce7);
+  color: var(--color-green-800, #166534);
+}
+
+.SQLFileManager__ComparisonBox {
+  border: 2px solid;
+  border-radius: var(--radius-lg, 0.5rem);
+  height: 24rem;
+  overflow: hidden;
+  width: 100%; /* Добавляем ширину */
+}
+
+.SQLFileManager__ComparisonBox__Source {
+  border-color: var(--color-red-200, #fecaca);
+  background-color: var(--color-red-50, #fef2f2);
+}
+
+.SQLFileManager__ComparisonBox__Target {
+  border-color: var(--color-green-200, #bbf7d0);
+  background-color: var(--color-green-50, #f0fdf4);
+}
+
+/* Визуальный индикатор */
+.SQLFileManager__VisualIndicator {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-blue-600, #2563eb);
+  color: var(--color-white, #ffffff);
+  padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 1rem);
+  border-radius: var(--radius-lg, 0.5rem);
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md, 0.75rem);
+}
+
+.SQLFileManager__IndicatorIcon {
+  font-size: var(--font-size-lg, 1.125rem);
+}
+
+.SQLFileManager__IndicatorContent {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs, 0.25rem);
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.SQLFileManager__IndicatorOriginal {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  background-color: var(--color-red-500, #ef4444);
+  color: var(--color-white, #ffffff);
+  padding: var(--spacing-xs, 0.25rem) var(--spacing-sm, 0.5rem);
+  border-radius: var(--radius-md, 0.375rem);
+}
+
+.SQLFileManager__IndicatorArrow {
+  color: var(--color-blue-200, #bfdbfe);
+}
+
+.SQLFileManager__IndicatorConverted {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  background-color: var(--color-green-500, #22c55e);
+  color: var(--color-white, #ffffff);
+  padding: var(--spacing-xs, 0.25rem) var(--spacing-sm, 0.5rem);
+  border-radius: var(--radius-md, 0.375rem);
+}
+
+.SQLFileManager__IndicatorLineInfo {
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--color-blue-200, #bfdbfe);
+}
+
+/* Одиночный просмотр */
+.SQLFileManager__SingleView {
+  border: 1px solid var(--color-gray-200, #e5e7eb);
+  border-radius: var(--radius-lg, 0.5rem);
+}
+
+.SQLFileManager__Textarea {
+  width: 100%;
+  height: 24rem;
+  padding: var(--spacing-lg, 1rem);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--font-size-sm, 0.875rem);
+  border: none;
+  border-radius: var(--radius-lg, 0.5rem);
+  background-color: var(--color-white, #ffffff);
+  color: var(--color-gray-900, #111827);
+  resize: none;
+  outline: none;
+  white-space: pre;
+}
+
+.SQLFileManager__Textarea::placeholder {
+  color: var(--color-gray-400, #9ca3af);
+}
+
+/* Спиннер */
+.SQLFileManager__Spinner {
+  display: inline-block;
+  margin-right: var(--spacing-xs, 0.25rem);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Скрытие scrollbar для Chrome, Safari и Opera */
+.SQLFileManager__FilesList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.SQLFileManager__FilesList::-webkit-scrollbar-track {
+  background: var(--color-gray-100, #f3f4f6);
+  border-radius: 4px;
+}
+
+.SQLFileManager__FilesList::-webkit-scrollbar-thumb {
+  background: var(--color-gray-300, #d1d5db);
+  border-radius: 4px;
+}
+
+.SQLFileManager__FilesList::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-400, #9ca3af);
+}
+
+/* Дополнительные классы для компонента */
+
+/* Селект диалекта в карточке файла */
+.SQLFileManager__DialectSelectWrapper {
+  margin-bottom: var(--spacing-sm, 0.5rem);
+}
+
+.SQLFileManager__DialectSelectLabel {
+  display: block;
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--color-gray-500, #6b7280);
+  margin-bottom: var(--spacing-xs, 0.25rem);
+}
+
+.SQLFileManager__FileItem__Default {
+  border-color: var(--color-gray-200, #e5e7eb);
+  background-color: var(--color-white, #ffffff);
+}
+
+.SQLFileManager__FileItem__Default:hover {
+  border-color: var(--color-gray-300, #d1d5db);
+}
+
+.SQLFileManager__FileItem__SelectedOriginal {
+  border-color: var(--color-blue-500, #3b82f6);
+  background-color: var(--color-blue-50, #eff6ff);
+}
+
+.SQLFileManager__FileItem__SelectedConverted {
+  border-color: var(--color-green-500, #10b981);
+  background-color: var(--color-green-50, #f0fdf4);
+}
+
+/* Иконки уведомлений */
+.SQLFileManager__NotificationIcon__Success {
+  color: var(--color-success, #059669);
+}
+
+.SQLFileManager__NotificationIcon__Error {
+  color: var(--color-error, #dc2626);
+}
+
+.SQLFileManager__NotificationText {
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+/* Цветовые модификаторы для карточек анализа */
+.SQLFileManager__AnalysisCard__Green {
+  background-color: var(--color-green-50, #f0fdf4);
+}
+
+.SQLFileManager__AnalysisCard__Purple {
+  background-color: var(--color-purple-50, #faf5ff);
+}
+
+.SQLFileManager__AnalysisCard__Orange {
+  background-color: var(--color-orange-50, #fff7ed);
+}
+
+.SQLFileManager__AnalysisValue__Green {
+  color: var(--color-green-600, #059669);
+}
+
+.SQLFileManager__AnalysisValue__Purple {
+  color: var(--color-purple-600, #9333ea);
+}
+
+.SQLFileManager__AnalysisValue__Orange {
+  color: var(--color-orange-600, #ea580c);
+}
+
+.SQLFileManager__AnalysisLabel__Green {
+  color: var(--color-green-800, #166534);
+}
+
+.SQLFileManager__AnalysisLabel__Purple {
+  color: var(--color-purple-800, #6b21a8);
+}
+
+.SQLFileManager__AnalysisLabel__Orange {
+  color: var(--color-orange-800, #9a3412);
+}
+
+/* Бейджи диалектов */
+.SQLFileManager__FileDialectBadge__Original {
+  background-color: var(--color-blue-100, #dbeafe);
+  color: var(--color-blue-800, #1e40af);
+}
+
+.SQLFileManager__FileDialectBadge__Converted {
+  background-color: var(--color-green-100, #dcfce7);
+  color: var(--color-green-800, #166534);
+}
+
+/* Контент сравнения */
+.SQLFileManager__ComparisonContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl, 1.5rem);
+}
+
+/* Список предупреждений */
+.SQLFileManager__WarningList {
+  margin: 0;
+  padding-left: var(--spacing-lg, 1rem);
+}
+
+.SQLFileManager__CompatibilityText {
+  font-weight: 500;
+}

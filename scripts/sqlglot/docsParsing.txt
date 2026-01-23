@@ -1,0 +1,467 @@
+1. Текущие возможности sqlglot:
+# Проверим, что поддерживает sqlglot
+import sqlglot
+from sqlglot.dialects import Dialect
+
+# Посмотрим на диалекты
+dialects = sqlglot.Dialect.classes.keys()
+print("Поддерживаемые диалекты:", sorted(dialects))
+
+# Попробуем сложные конструкции
+test_cases = {
+    "CTE": "WITH cte AS (SELECT * FROM t) SELECT * FROM cte",
+    "Window": "SELECT SUM(x) OVER (PARTITION BY y ORDER BY z) FROM t",
+    "Procedure": "CREATE PROCEDURE test() BEGIN SELECT 1; END",
+    "Function": "CREATE FUNCTION test() RETURNS INT RETURN 1",
+    "Trigger": "CREATE TRIGGER tr BEFORE INSERT ON t FOR EACH ROW BEGIN ... END",
+}
+
+2. Комплексное решение: Комбинация инструментов
+Архитектура улучшенного конвертера:
+Ваш код (основа)
+    ↓
+sqlglot (базовая трансформация)
+    ↓
+Custom transformers (для сложных случаев)
+    ↓
+SQLoxide / pglast (PostgreSQL AST)
+    ↓
+SQLFluff (валидация/форматирование)
+    ↓
+Результат + предупреждения
+
+Расширенная версия вашего кода:
+import sqlglot
+import sqlfluff
+from typing import Dict, List, Optional, Tuple
+import re
+from enum import Enum
+
+class SQLObjectType(Enum):
+    """Типы SQL объектов"""
+    TABLE = "TABLE"
+    VIEW = "VIEW"
+    PROCEDURE = "PROCEDURE"
+    FUNCTION = "FUNCTION"
+    TRIGGER = "TRIGGER"
+    INDEX = "INDEX"
+    SEQUENCE = "SEQUENCE"
+    UNKNOWN = "UNKNOWN"
+
+class AdvancedSQLConverter:
+    def __init__(self):
+        self.warnings = []
+        self.errors = []
+        
+    def detect_object_type(self, sql: str) -> SQLObjectType:
+        """Определяет тип SQL объекта"""
+        sql_upper = sql.upper().strip()
+        
+        if sql_upper.startswith("CREATE OR REPLACE") or sql_upper.startswith("CREATE"):
+            if "PROCEDURE" in sql_upper:
+                return SQLObjectType.PROCEDURE
+            elif "FUNCTION" in sql_upper:
+                return SQLObjectType.FUNCTION
+            elif "TRIGGER" in sql_upper:
+                return SQLObjectType.TRIGGER
+            elif "VIEW" in sql_upper:
+                return SQLObjectType.VIEW
+            elif "INDEX" in sql_upper:
+                return SQLObjectType.INDEX
+            elif "SEQUENCE" in sql_upper:
+                return SQLObjectType.SEQUENCE
+            elif "TABLE" in sql_upper:
+                return SQLObjectType.TABLE
+        
+        return SQLObjectType.UNKNOWN
+    
+    def parse_complex_sql(self, sql: str, from_dialect: str) -> Dict:
+        """Парсинг сложного SQL"""
+        try:
+            # Пробуем через sqlglot
+            expressions = sqlglot.parse(sql, read=from_dialect)
+            
+            # Если не получилось, используем расширенный парсер
+            if not expressions:
+                return self._parse_with_custom_parser(sql, from_dialect)
+            
+            return {
+                "success": True,
+                "expressions": expressions,
+                "object_type": self.detect_object_type(sql)
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e),
+                "object_type": self.detect_object_type(sql)
+            }
+    
+    def _parse_with_custom_parser(self, sql: str, dialect: str) -> Dict:
+        """Кастомный парсер для сложных конструкций"""
+        # Регулярные выражения для распознавания паттернов
+        patterns = {
+            'procedure': r'(?i)CREATE\s+(?:OR\s+REPLACE\s+)?PROCEDURE\s+(\w+)\s*\(([^)]*)\)',
+            'function': r'(?i)CREATE\s+(?:OR\s+REPLACE\s+)?FUNCTION\s+(\w+)\s*\(([^)]*)\)\s+RETURNS\s+(\w+)',
+            'trigger': r'(?i)CREATE\s+(?:OR\s+REPLACE\s+)?TRIGGER\s+(\w+)\s+(BEFORE|AFTER)\s+(INSERT|UPDATE|DELETE)',
+            'cte': r'(?i)WITH\s+(\w+)\s+AS\s*\(([^)]+)\)',
+            'transaction': r'(?i)(BEGIN\s+TRANSACTION|START\s+TRANSACTION|COMMIT|ROLLBACK)',
+            'analytic': r'(?i)(ROLLUP|CUBE|GROUPING\s+SETS)\s*\([^)]+\)',
+            'window': r'(?i)OVER\s*\([^)]+\)',
+        }
+        
+        detected = {}
+        for key, pattern in patterns.items():
+            matches = re.findall(pattern, sql, re.DOTALL | re.IGNORECASE)
+            if matches:
+                detected[key] = matches
+        
+        return {
+            "success": True if detected else False,
+            "detected_patterns": detected,
+            "original_sql": sql
+        }
+    
+    def convert_procedure(self, sql: str, from_dialect: str, to_dialect: str) -> str:
+        """Конвертация хранимых процедур"""
+        # Паттерны для разных диалектов
+        dialect_patterns = {
+            "mysql": {
+                "create": "CREATE PROCEDURE {} ({})\nBEGIN\n{}\nEND",
+                "delimiter": "DELIMITER $$",
+            },
+            "postgres": {
+                "create": "CREATE OR REPLACE PROCEDURE {} ({})\nLANGUAGE plpgsql\nAS $$\nBEGIN\n{}\nEND;\n$$",
+            },
+            "oracle": {
+                "create": "CREATE OR REPLACE PROCEDURE {} ({})\nIS\nBEGIN\n{}\nEND {};",
+            },
+            "mssql": {
+                "create": "CREATE PROCEDURE {}\n{}\nAS\nBEGIN\n{}\nEND",
+            },
+            "snowflake": {
+                "create": "CREATE OR REPLACE PROCEDURE {} ({})\nRETURNS VARCHAR\nLANGUAGE JAVASCRIPT\nAS $$\n{}\n$$;",
+            }
+        }
+        
+        # Извлекаем информацию о процедуре
+        match = re.search(
+            r'(?i)CREATE\s+(?:OR\s+REPLACE\s+)?PROCEDURE\s+(\w+)\s*\(([^)]*)\)\s*(.*)',
+            sql,
+            re.DOTALL
+        )
+        
+        if not match:
+            self.warnings.append("Не удалось распарсить процедуру")
+            return f"-- Не удалось конвертировать процедуру\n{sql}"
+        
+        proc_name, params, body = match.groups()
+        
+        # Базовая конвертация
+        if to_dialect in dialect_patterns:
+            template = dialect_patterns[to_dialect]["create"]
+            return template.format(proc_name, params, body.strip(), proc_name)
+        else:
+            self.warnings.append(f"Нет шаблона для процедур в {to_dialect}")
+            return f"-- Процедуры не поддерживаются в {to_dialect}\n{sql}"
+    
+    def convert_function(self, sql: str, from_dialect: str, to_dialect: str) -> str:
+        """Конвертация функций"""
+        # Аналогично процедурам, но с RETURN TYPE
+        return self._convert_with_template(sql, "FUNCTION", from_dialect, to_dialect)
+    
+    def convert_trigger(self, sql: str, from_dialect: str, to_dialect: str) -> str:
+        """Конвертация триггеров"""
+        return self._convert_with_template(sql, "TRIGGER", from_dialect, to_dialect)
+    
+    def _convert_with_template(self, sql: str, obj_type: str, 
+                              from_dialect: str, to_dialect: str) -> str:
+        """Общий метод конвертации с шаблонами"""
+        templates = self._load_templates(obj_type)
+        
+        if to_dialect not in templates:
+            self.warnings.append(f"Нет шаблона для {obj_type} в {to_dialect}")
+            return f"-- {obj_type} не поддерживается в {to_dialect}\n{sql}"
+        
+        # Здесь должна быть логика извлечения и преобразования
+        return sql  # Заглушка
+    
+    def convert_cte(self, sql: str, from_dialect: str, to_dialect: str) -> str:
+        """Конвертация CTE (Common Table Expressions)"""
+        # CTE обычно хорошо поддерживаются, но есть нюансы
+        result = sql
+        
+        # Замены для разных диалектов
+        if to_dialect == "oracle":
+            # Oracle поддерживает WITH, но есть особенности
+            result = re.sub(r'(?i)WITH\s+RECURSIVE', 'WITH', result)
+        elif to_dialect == "bigquery":
+            # BigQuery требует запятую между CTE
+            result = re.sub(r'(?i)WITH\s+(\w+)\s+AS\s*\([^)]+\)\s+(\w+)\s+AS', 
+                          r'WITH \1 AS ( ... ), \2 AS', result)
+        
+        return result
+    
+    def convert_rollup_cube(self, sql: str, from_dialect: str, to_dialect: str) -> str:
+        """Конвертация ROLLUP/CUBE/GROUPING SETS"""
+        result = sql
+        
+        # Проверка поддержки
+        unsupported_dialects = ["sqlite"]  # SQLite не поддерживает ROLLUP/CUBE
+        if to_dialect in unsupported_dialects:
+            self.warnings.append(f"{to_dialect} не поддерживает ROLLUP/CUBE")
+            # Заменяем на эмуляцию через UNION ALL
+            result = self._emulate_rollup_cube(sql, to_dialect)
+        
+        return result
+    
+    def _emulate_rollup_cube(self, sql: str, dialect: str) -> str:
+        """Эмуляция ROLLUP/CUBE для диалектов без поддержки"""
+        # Базовая эмуляция через UNION ALL
+        # Это сложная логика, требующая полного парсинга
+        return f"-- ROLLUP/CUBE эмулируется через UNION ALL для {dialect}\n{sql}"
+    
+    def convert_transaction(self, sql: str, from_dialect: str, to_dialect: str) -> str:
+        """Конвертация транзакций"""
+        result = sql
+        
+        # Замены для разных диалектов
+        replacements = {
+            "mysql": {
+                "START TRANSACTION": "START TRANSACTION",
+                "BEGIN TRANSACTION": "START TRANSACTION",
+                "COMMIT": "COMMIT",
+                "ROLLBACK": "ROLLBACK",
+            },
+            "postgres": {
+                "START TRANSACTION": "BEGIN",
+                "BEGIN TRANSACTION": "BEGIN",
+                "COMMIT": "COMMIT",
+                "ROLLBACK": "ROLLBACK",
+            },
+            "oracle": {
+                "START TRANSACTION": "SET TRANSACTION",
+                "BEGIN TRANSACTION": "BEGIN",
+                "COMMIT": "COMMIT",
+                "ROLLBACK": "ROLLBACK",
+            }
+        }
+        
+        if to_dialect in replacements:
+            for from_cmd, to_cmd in replacements[to_dialect].items():
+                result = re.sub(rf'\b{from_cmd}\b', to_cmd, result, flags=re.IGNORECASE)
+        
+        return result
+    
+    def advanced_transpile(self, sql: str, from_dialect: str, to_dialect: str) -> Dict:
+        """Расширенная транспиляция с поддержкой сложных конструкций"""
+        # Определяем тип объекта
+        obj_type = self.detect_object_type(sql)
+        
+        # Обрабатываем в зависимости от типа
+        if obj_type == SQLObjectType.PROCEDURE:
+            converted = self.convert_procedure(sql, from_dialect, to_dialect)
+        elif obj_type == SQLObjectType.FUNCTION:
+            converted = self.convert_function(sql, from_dialect, to_dialect)
+        elif obj_type == SQLObjectType.TRIGGER:
+            converted = self.convert_trigger(sql, from_dialect, to_dialect)
+        elif obj_type == SQLObjectType.UNKNOWN:
+            # Проверяем на сложные конструкции в запросах
+            parsed = self._parse_with_custom_parser(sql, from_dialect)
+            
+            if "cte" in parsed.get("detected_patterns", {}):
+                converted = self.convert_cte(sql, from_dialect, to_dialect)
+            elif "analytic" in parsed.get("detected_patterns", {}):
+                converted = self.convert_rollup_cube(sql, from_dialect, to_dialect)
+            elif "transaction" in parsed.get("detected_patterns", {}):
+                converted = self.convert_transaction(sql, from_dialect, to_dialect)
+            else:
+                # Используем обычную транспиляцию
+                try:
+                    converted = sqlglot.transpile(
+                        sql, read=from_dialect, write=to_dialect, pretty=True
+                    )[0]
+                except:
+                    converted = sql
+        else:
+            # Для таблиц, представлений и т.д. используем sqlglot
+            try:
+                converted = sqlglot.transpile(
+                    sql, read=from_dialect, write=to_dialect, pretty=True
+                )[0]
+            except Exception as e:
+                self.errors.append(f"Ошибка транспиляции: {str(e)[:100]}")
+                converted = sql
+        
+        # Пост-обработка
+        converted = self.post_process(converted, to_dialect)
+        
+        return {
+            "success": len(self.errors) == 0,
+            "converted_sql": converted,
+            "object_type": obj_type.value,
+            "warnings": self.warnings,
+            "errors": self.errors,
+            "from_dialect": from_dialect,
+            "to_dialect": to_dialect
+        }
+    
+    def post_process(self, sql: str, dialect: str) -> str:
+        """Пост-обработка результата"""
+        # Форматирование с помощью SQLFluff (если установлен)
+        try:
+            import sqlfluff
+            formatted = sqlfluff.fix(sql, dialect=dialect)
+            return formatted
+        except:
+            # Базовое форматирование
+            return self.format_sql(sql)
+    
+    def format_sql(self, sql: str) -> str:
+        """Базовое форматирование SQL"""
+        # Простое улучшение читаемости
+        sql = re.sub(r';\s*', ';\n\n', sql)
+        sql = re.sub(r'(\bSELECT\b|\bFROM\b|\bWHERE\b|\bJOIN\b|\bGROUP BY\b)', 
+                    r'\n\1', sql, flags=re.IGNORECASE)
+        return sql
+
+# Интеграция с вашим существующим кодом
+def enhanced_transpile_sql_for_dialect(sql: str, from_dialect: str, 
+                                      to_dialect: str) -> Dict[str, Any]:
+    """Улучшенная транспиляция с поддержкой сложных конструкций"""
+    
+    # Создаем расширенный конвертер
+    converter = AdvancedSQLConverter()
+    
+    # Разбиваем на отдельные выражения
+    statements = []
+    current = ""
+    in_block = False
+    delimiter = ';'
+    
+    # Простой парсинг с учетом DELIMITER
+    lines = sql.split('\n')
+    for line in lines:
+        if line.strip().upper().startswith('DELIMITER '):
+            delimiter = line.split()[1]
+            continue
+        
+        current += line + '\n'
+        if delimiter in line and not in_block:
+            statements.append(current.strip())
+            current = ""
+    
+    if current.strip():
+        statements.append(current.strip())
+    
+    # Конвертируем каждое выражение
+    results = []
+    all_warnings = []
+    all_errors = []
+    
+    for stmt in statements:
+        if not stmt.strip():
+            continue
+            
+        result = converter.advanced_transpile(stmt, from_dialect, to_dialect)
+        
+        if result["success"]:
+            results.append(result["converted_sql"])
+        else:
+            results.append(f"-- Ошибка конвертации: {result.get('errors', [])}\n{stmt}")
+        
+        all_warnings.extend(result.get("warnings", []))
+        all_errors.extend(result.get("errors", []))
+    
+    # Объединяем результаты
+    final_sql = '\n\n'.join(results)
+    
+    return {
+        "success": len(all_errors) == 0,
+        "transpiled": [final_sql],
+        "from_dialect": from_dialect,
+        "to_dialect": to_dialect,
+        "warnings": list(set(all_warnings)),
+        "errors": list(set(all_errors)),
+        "note": "Использован расширенный конвертер с поддержкой процедур, функций и триггеров"
+    }
+
+3. Альтернативные инструменты:
+Для сложного парсинга:
+SQLoxide - парсер SQL на Rust с Python биндингами
+
+pglast - парсер PostgreSQL SQL в AST
+
+moz-sql-parser - парсер SQL на Python
+
+ANTLR с SQL грамматиками
+
+Пример с SQLoxide:
+# pip install sqloxide
+import sqloxide
+
+def parse_with_sqloxide(sql: str):
+    """Парсинг SQL через SQLoxide"""
+    try:
+        parsed = sqloxide.parse_sql(sql, dialect='ansi')
+        return parsed
+    except:
+        return None
+
+4. Практический план улучшения:
+# 1. Добавить поддержку процедур через шаблоны
+PROCEDURE_TEMPLATES = {
+    "mysql_to_postgres": {
+        "pattern": r"CREATE PROCEDURE (\w+)\(([^)]*)\) BEGIN(.*)END",
+        "template": """CREATE OR REPLACE PROCEDURE {name}({params})
+LANGUAGE plpgsql
+AS $$
+BEGIN
+{body}
+END;
+$$;"""
+    }
+}
+
+# 2. Добавить эмуляцию для неподдерживаемых функций
+def emulate_missing_features(sql: str, feature: str, dialect: str) -> str:
+    """Эмуляция неподдерживаемых функций"""
+    emulations = {
+        "ROLLUP": emulate_rollup,
+        "CUBE": emulate_cube,
+        "MERGE": emulate_merge,
+        "PIVOT": emulate_pivot,
+    }
+    
+    if feature in emulations:
+        return emulations[feature](sql, dialect)
+    return sql
+
+# 3. Создать базу знаний о диалектах
+DIALECT_CAPABILITIES = {
+    "postgres": {
+        "supports_procedures": True,
+        "supports_functions": True,
+        "supports_triggers": True,
+        "supports_cte": True,
+        "supports_window": True,
+        "supports_rollup": True,
+        "supports_cube": True,
+    },
+    "sqlite": {
+        "supports_procedures": False,  # Только через расширения
+        "supports_functions": True,    # Скалярные функции
+        "supports_triggers": True,
+        "supports_cte": True,          # Только простые
+        "supports_window": True,       # С версии 3.25
+        "supports_rollup": False,
+        "supports_cube": False,
+    },
+    # ... для других диалектов
+}
+
+Для production-системы рассмотрите использование Apache Calcite или Presto SQL Parser, но они требуют Java и более сложной интеграции.
+
+sqlglot имеет собственный стиль форматирования и управление идентификаторами. Нужно полностью отделить семантическую конвертацию от форматирования. Вот исправленный код с использованием sqlparse для финального форматирования
+
+#4. СМ Alembic

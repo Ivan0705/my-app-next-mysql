@@ -1,0 +1,16 @@
+import { Project, Testimonials, Skill } from "@prisma/client";
+
+export type ProjectWithRelations = Project & {
+  testimonials?: Testimonials[];
+};
+
+export type SkillWithCategory = Skill & {
+  category: "Frontend" | "Backend" | "Database" | "DevOps" | "Other";
+};
+
+export type ProjectAnalytics = {
+  month: string;
+  totalVisitors: number;
+  totalRevenue: number;
+};
+

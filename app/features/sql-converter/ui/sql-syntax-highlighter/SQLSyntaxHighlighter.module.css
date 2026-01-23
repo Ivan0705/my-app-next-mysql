@@ -1,0 +1,220 @@
+/* Контейнер для хайлайтера */
+.SQLSyntaxHighlighter__Container {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  font-family: ui-monospace, monospace;
+  font-size: 0.875rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background-color: white;
+  padding: 1rem;
+}
+
+/* Скроллбар */
+.SQLSyntaxHighlighter__Container::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.SQLSyntaxHighlighter__Container::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 0.375rem;
+}
+
+.SQLSyntaxHighlighter__Container::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 0.375rem;
+}
+
+.SQLSyntaxHighlighter__Container::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+/* Адаптивность */
+@media (max-width: 768px) {
+  .SQLSyntaxHighlighter__Container {
+    font-size: 0.75rem;
+  }
+}
+
+/* Линия кода */
+.SQLSyntaxHighlighter__Line {
+  display: flex;
+  min-height: 1.5rem;
+  line-height: 1.5rem;
+}
+/* Подсветка при наведении */
+.SQLSyntaxHighlighter__Line:hover {
+  background-color: #f9fafb;
+}
+
+/* Номер строки */
+.SQLSyntaxHighlighter__LineNumber {
+  color: #9ca3af;
+  font-size: 0.75rem;
+  width: 3rem;
+  min-width: 3rem;
+  text-align: right;
+  padding-right: 0.5rem;
+  user-select: none;
+  background-color: inherit;
+}
+/* Адаптивность */
+@media (max-width: 768px) {
+  .SQLSyntaxHighlighter__LineNumber {
+    width: 2rem;
+    min-width: 2rem;
+  }
+}
+/* Контент строки */
+.SQLSyntaxHighlighter__Content {
+  flex: 1;
+  padding-left: 0.5rem;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Токены */
+.SQLSyntaxHighlighter__Token {
+  display: inline;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Ключевые слова */
+.SQLSyntaxHighlighter__Keyword {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* Специальные конструкции */
+.SQLSyntaxHighlighter__Special {
+  background-color: #f3e8ff;
+  color: #6b21a8;
+  border-radius: 0.25rem;
+  padding: 0 2px;
+  font-weight: 600;
+}
+
+/* Долларовые кавычки */
+.SQLSyntaxHighlighter__DollarQuote {
+  background-color: #faf5ff;
+  color: #9333ea;
+  border-radius: 0.25rem;
+  padding: 0 2px;
+  font-weight: bold;
+}
+
+/* MySQL делимитер */
+.SQLSyntaxHighlighter__Delimiter {
+  background-color: #ffedd5;
+  color: #9a3412;
+  border-radius: 0.25rem;
+  padding: 0 2px;
+  font-weight: bold;
+}
+
+/* Типы данных */
+.SQLSyntaxHighlighter__DataType {
+  background-color: #dbeafe;
+  color: #1e40af;
+  border-radius: 0.25rem;
+  padding: 0 2px;
+  font-weight: 600;
+}
+
+/* Идентификаторы */
+.SQLSyntaxHighlighter__Identifier {
+  color: #111827;
+}
+
+/* Пробелы */
+.SQLSyntaxHighlighter__Whitespace {
+  white-space: pre;
+}
+
+/* Изменения типов данных */
+.SQLSyntaxHighlighter__DataTypeChange {
+  background-color: rgba(255, 235, 59, 0.3);
+  border-radius: 0.25rem;
+  padding: 0 2px;
+  border-bottom: 1px dashed #ff9800;
+}
+
+/* INT -> INTEGER */
+.SQLSyntaxHighlighter__IntToIntegerChange {
+  background-color: rgba(100, 181, 246, 0.3);
+  border-bottom: 1px dashed #1976d2;
+}
+
+/* INT -> NUMBER */
+.SQLSyntaxHighlighter__IntToNumberChange {
+  background-color: rgba(129, 212, 250, 0.3);
+  border-bottom: 1px dashed #0288d1;
+}
+
+/* DECIMAL -> NUMBER */
+.SQLSyntaxHighlighter__DecimalToNumberChange {
+  background-color: rgba(77, 208, 225, 0.3);
+  border-bottom: 1px dashed #0097a7;
+}
+
+/* TIMESTAMP изменения */
+.SQLSyntaxHighlighter__TimestampChange {
+  background-color: rgba(255, 193, 7, 0.3);
+  border-bottom: 1px dashed #ff8f00;
+}
+
+.SQLSyntaxHighlighter__Operator {
+  color: #9c27b0;
+  font-weight: 600;
+}
+
+/* Для появившихся конструкций - зеленый фон */
+.SQLSyntaxHighlighter__Added {
+  background-color: #dcfce7;
+  color: #16a34a;
+  border-radius: 0.25rem;
+  padding: 0 2px;
+  border: 1px dashed #22c55e;
+}
+
+/* Для добавленных комментариев - светло-зеленый */
+.SQLSyntaxHighlighter__Comment {
+  color: #15803d;
+  font-style: italic;
+}
+
+/* Активное выделение при наведении */
+.SQLSyntaxHighlighter__Active {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  z-index: 10;
+  position: relative;
+}
+/* SQLSyntaxHighlighter.module.css - добавляем стили для removed */
+.SQLSyntaxHighlighter__Removed {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border-radius: 0.25rem;
+  padding: 0 2px;
+  border: 1px dashed #ef4444;
+  text-decoration: line-through;
+}
+
+/* Для предупреждений (warnings) */
+.SQLSyntaxHighlighter__Warning {
+  background-color: #fef9c3;
+  color: #854d0e;
+  border-radius: 0.25rem;
+  padding: 0 2px;
+  border: 1px dashed #ca8a04;
+}
+/* SQLSyntaxHighlighter.module.css - добавляем стили */
+.SQLSyntaxHighlighter__Highlighted {
+  background-color: #fef9c3;
+  border-radius: 0.25rem;
+  padding: 0 2px;
+  transition: background-color 0.15s ease;
+}
+

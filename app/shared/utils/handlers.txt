@@ -1,0 +1,77 @@
+import { NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
+import { HandlerOptions, ServiceCall } from "./types";
+
+export const handlerServiceCall: any = async <T>(
+  serviceCall: ServiceCall<T>,
+  options: HandlerOptions = {}
+): Promise<NextResponse> => {
+  const { successStatus = 200 } = options;
+  try {
+    const result = await serviceCall();
+
+    return createSuccess(result, successStatus);
+  } catch (error: any) {
+    return handleError(error);
+  }
+};
+
+const handleError = (error: unknown): NextResponse => {
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    return generateError(
+      "Database error",
+      { code: error.code, meta: error.meta },
+      500
+    );
+  }
+
+  if (error instanceof Prisma.PrismaClientValidationError) {
+    return generateError("Validation error", { message: error.message }, 400);
+  }
+
+  const errorMessage =
+    error instanceof Error ? error.message : "Internal server error";
+
+  const status = getStatusCodeFromError(errorMessage);
+
+  return generateError(errorMessage, null, status);
+};
+
+const getStatusCodeFromError = (errorMessage: string): number => {
+  if (errorMessage.includes("not found")) return 404;
+  if (errorMessage.includes("already exists")) return 409;
+  if (errorMessage.includes("Invalid") || errorMessage.includes("Validation"))
+    return 400;
+  if (
+    errorMessage.includes("Unauthorized") ||
+    errorMessage.includes("Forbidden")
+  )
+    return 401;
+  return 500;
+};
+
+const createSuccess = (data: unknown, status: number): NextResponse => {
+  return NextResponse.json(data, {
+    status,
+    headers: {
+      "Content-Type": "application/json",
+      "X-Content-Type-Options": "nosniff",
+    },
+  });
+};
+
+const generateError = (
+  error: unknown,
+  details: unknown,
+  status: number
+): NextResponse => {
+  const response: any = { success: false, error };
+  if (details) response.details = details;
+  return NextResponse.json(response, {
+    status,
+    headers: {
+      "Content-Type": "application/json",
+      "X-Content-Type-Options": "nosniff",
+    },
+  });
+};
