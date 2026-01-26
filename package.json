@@ -1,11 +1,13 @@
 {
-  "homepage":"https://ivan0705.github.io/my-app-next-mysql",
+  "homepage": "https://ivan0705.github.io/my-app-next-mysql",
   "name": "my-app-next-mysql",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:static": "cp next.config.prod.ts next.config.ts && next build && cp next.config.dev.ts next.config.ts",
+    "preview": "npx serve@latest out",
     "start": "next start",
     "run": "npm run dev",
     "lint": "next lint",
@@ -27,7 +29,6 @@
     "electron:start": "electron dist-electron/main/main.js",
     "electron:simple": "npm run build:electron && electron dist-electron/main/main.js",
     "dist": "npm run build && npm run build:electron && electron-builder --publish=never",
-
     "test:postgres": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert postgres",
     "test:bigquery": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert bigquery",
     "test:snowflake": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert snowflake",
