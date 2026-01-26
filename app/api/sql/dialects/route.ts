@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { handleSqlRequest } from "@/app/shared/lib/sql-transpiler";
+export const dynamic = 'force-static';
+export const revalidate = 3600; // 1 час кэша
 
 export async function GET(request: NextRequest) {
   try {
