@@ -1,15 +1,14 @@
 import type { NextConfig } from "next";
 import path from "path";
 
-
-
 const nextConfig: NextConfig = {
+  output: "export",
   trailingSlash: true,
   images: {
     unoptimized: true,
   },
   reactStrictMode: false,
-  
+
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
@@ -18,11 +17,17 @@ const nextConfig: NextConfig = {
       "@lib": path.resolve(__dirname, "lib"),
       "@app": path.resolve(__dirname, "app"),
       "@processes": path.resolve(__dirname, "processes"),
-      "@entities": path.resolve(__dirname, "@entities")
+      "@entities": path.resolve(__dirname, "@entities"),
     };
 
     config.resolve.extensions = [
-      ".js", ".jsx", ".ts", ".tsx", ".json", ".css", ".scss",
+      ".js",
+      ".jsx",
+      ".ts",
+      ".tsx",
+      ".json",
+      ".css",
+      ".scss",
     ];
 
     return config;
