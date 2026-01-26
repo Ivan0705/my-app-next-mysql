@@ -12,21 +12,49 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
       
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
       
-      - run: npm ci
-      - run: npm run build
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Handle API routes for static export
+        run: |
+          # Временно отключаем API routes если они есть
+          if [ -d "app/api" ]; then
+            echo "📁 Temporarily renaming API routes for static build..."
+            mv app/api app/_api_temp
+          fi
+      
+      - name: Use production config
+        run: |
+          # Используем конфиг для статического экспорта
+          cp next.config.prod.ts next.config.ts
+          echo "✅ Using production config with output: 'export'"
+      
+      - name: Build Next.js
+        run: npm run build
+      
+      - name: Restore API routes
+        if: always()
+        run: |
+          if [ -d "app/_api_temp" ]; then
+            echo "📁 Restoring API routes..."
+            mv app/_api_temp app/api
+          fi
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out  
+          path: ./out
 
   deploy:
     needs: build
@@ -34,6 +62,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
