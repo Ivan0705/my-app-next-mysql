@@ -9,6 +9,11 @@ permissions:
   pages: write
   id-token: write
 
+# Оптимизация для GitHub Pages
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,14 +39,40 @@ jobs:
             mv app/api app/_api_temp
           fi
       
-      - name: Use production config
+      - name: Configure for GitHub Pages
         run: |
-          # Используем конфиг для статического экспорта
+          # Копируем продакшн конфиг
           cp next.config.prod.ts next.config.ts
-          echo "✅ Using production config with output: 'export'"
+          
+          # Добавляем basePath для GitHub Pages (если нужно)
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          echo "Repository name: $REPO_NAME"
+          
+          # Создаем .nojekyll файл для отключения Jekyll
+          touch .nojekyll
+          
+          echo "✅ Production config with GitHub Pages optimizations applied"
       
       - name: Build Next.js
         run: npm run build
+      
+      - name: Verify build output
+        run: |
+          echo "📁 Checking build output..."
+          ls -la out/ 2>/dev/null || echo "No out/ directory"
+          ls -la out/_next/static/css/ 2>/dev/null || echo "No CSS files found"
+          
+          # Проверяем что CSS файлы созданы
+          if [ -d "out/_next/static/css" ]; then
+            echo "✅ CSS files found:"
+            ls out/_next/static/css/
+          fi
+      
+      - name: Add .nojekyll file
+        run: |
+          # GitHub Pages требует .nojekyll для Next.js
+          touch out/.nojekyll
+          echo "📄 Created .nojekyll file"
       
       - name: Restore API routes
         if: always()
@@ -51,7 +82,7 @@ jobs:
             mv app/_api_temp app/api
           fi
       
-      - name: Upload artifact
+      - name: Upload artifact to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
