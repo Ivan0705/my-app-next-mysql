@@ -74,7 +74,7 @@
     "concurrently": "^9.2.1",
     "electron": "^39.2.3",
     "electron-builder": "^26.0.12",
-    "eslint-config-next": "16.1.5",
+    "eslint-config-next": "^15.5.10",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",

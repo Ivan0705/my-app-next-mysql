@@ -16,12 +16,12 @@ export const Header = (props: HeaderProps) => {
     <header className={cls.Header}>
       <div className={cls.Header_Container}>
         <div className={cls.Header_Logo}>
-          <a href="/" aria-label="Home page">
+          <div aria-label="Home page">
             TypeSQL Converter
             {isElectron && !isLoading && (
               <span className={cls.Header_Desktop}>Desktop</span>
             )}
-          </a>
+          </div>
         </div>
       </div>
     </header>
