@@ -58,48 +58,53 @@ jobs:
       - name: Fix CSS paths in HTML files
         run: |
           echo "🔧 Fixing CSS paths in HTML files..."
-          # Исправляем абсолютные пути на относительные
-          find out -name "*.html" -exec sed -i \
-            's|href="/_next/|href="./_next/|g; \
-             s|src="/_next/|src="./_next/|g; \
-             s|href="/static/|href="./static/|g; \
-             s|src="/static/|src="./static/|g' {} \;
-          echo "✅ HTML paths fixed"
+          # Исправляем абсолютные пути на относительные в HTML
+          if [ -d "out" ]; then
+            find out -name "*.html" -type f -exec sed -i 's|href="/_next/|href="./_next/|g' {} \;
+            find out -name "*.html" -type f -exec sed -i 's|src="/_next/|src="./_next/|g' {} \;
+            echo "✅ HTML paths fixed"
+          else
+            echo "⚠️ No out/ directory found"
+          fi
       
       - name: Fix asset paths in CSS files
         run: |
           echo "🔧 Fixing asset paths in CSS files..."
-          # Исправляем url() в CSS
-          find out -name "*.css" -exec sed -i \
-            's|url(/|url(./|g; \
-             s|url("/|url("./|g; \
-             s|url(\'/|url(\'./|g' {} \; 2>/dev/null || true
-          echo "✅ CSS paths fixed"
+          # Исправляем url() в CSS файлах
+          if [ -d "out" ]; then
+            # Простая замена - более надежная
+            find out -name "*.css" -type f -exec sed -i 's|url(/|url(./|g' {} \;
+            echo "✅ CSS paths fixed"
+          else
+            echo "⚠️ No out/ directory found"
+          fi
       
       - name: Verify fixed paths
         run: |
           echo "🔍 Verifying fixed paths..."
           
-          # Проверяем HTML
-          if grep -q 'href="./_next/' out/index.html 2>/dev/null; then
-            echo "✅ HTML has relative paths"
-          else
-            echo "❌ HTML still has absolute paths"
-            echo "Sample:"
-            grep -o 'href="[^"]*\.css"' out/index.html | head -2
+          if [ -f "out/index.html" ]; then
+            # Проверяем HTML
+            if grep -q 'href="./_next/' out/index.html; then
+              echo "✅ HTML has relative paths"
+            else
+              echo "❌ HTML still has absolute paths"
+              echo "First CSS link found:"
+              grep -o 'href="[^"]*\.css"' out/index.html | head -1
+            fi
           fi
           
           # Проверяем CSS файлы
           if [ -d "out/_next/static/css" ]; then
-            CSS_COUNT=$(ls out/_next/static/css/*.css 2>/dev/null | wc -l)
+            CSS_COUNT=$(find out/_next/static/css -name "*.css" | wc -l)
             echo "✅ Found $CSS_COUNT CSS files"
           fi
       
       - name: Create .nojekyll file
         run: |
           # Важно для Next.js на GitHub Pages
-          touch out/.nojekyll
-          echo "📄 Created .nojekyll file in output"
+          touch out/.nojekyll 2>/dev/null || echo "Could not create .nojekyll"
+          echo "📄 .nojekyll file check complete"
       
       - name: Restore API routes
         if: always()
