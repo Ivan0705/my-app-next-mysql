@@ -58,6 +58,7 @@
     "NCLOB",
     "NEWSEQUENTIALID",
     "NOCOUNT",
+    "nojekyll",
     "nosniff",
     "nsis",
     "NTEXT",
