@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: false,
   
   // Добавьте для статического экспорта
-  assetPrefix: './', // ← ВАЖНО для GitHub Pages!
+  //assetPrefix: './', // ← ВАЖНО для GitHub Pages!
   
   webpack: (config) => {
     config.resolve.alias = {
