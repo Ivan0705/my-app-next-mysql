@@ -9,7 +9,6 @@ permissions:
   pages: write
   id-token: write
 
-# Оптимизация для GitHub Pages
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -33,9 +32,8 @@ jobs:
       
       - name: Handle API routes for static export
         run: |
-          # Временно отключаем API routes если они есть
           if [ -d "app/api" ]; then
-            echo "📁 Temporarily renaming API routes for static build..."
+            echo "📁 Temporarily disabling API routes..."
             mv app/api app/_api_temp
           fi
       
@@ -44,45 +42,73 @@ jobs:
           # Копируем продакшн конфиг
           cp next.config.prod.ts next.config.ts
           
-          # Добавляем basePath для GitHub Pages (если нужно)
-          REPO_NAME="${GITHUB_REPOSITORY#*/}"
-          echo "Repository name: $REPO_NAME"
+          # Устанавливаем production mode
+          echo "NODE_ENV=production" >> $GITHUB_ENV
           
-          # Создаем .nojekyll файл для отключения Jekyll
+          # Создаем .nojekyll
           touch .nojekyll
           
-          echo "✅ Production config with GitHub Pages optimizations applied"
+          echo "✅ GitHub Pages configuration ready"
       
       - name: Build Next.js
+        env:
+          NODE_ENV: production
         run: npm run build
       
-      - name: Verify build output
+      - name: Fix CSS paths in HTML files
         run: |
-          echo "📁 Checking build output..."
-          ls -la out/ 2>/dev/null || echo "No out/ directory"
-          ls -la out/_next/static/css/ 2>/dev/null || echo "No CSS files found"
+          echo "🔧 Fixing CSS paths in HTML files..."
+          # Исправляем абсолютные пути на относительные
+          find out -name "*.html" -exec sed -i \
+            's|href="/_next/|href="./_next/|g; \
+             s|src="/_next/|src="./_next/|g; \
+             s|href="/static/|href="./static/|g; \
+             s|src="/static/|src="./static/|g' {} \;
+          echo "✅ HTML paths fixed"
+      
+      - name: Fix asset paths in CSS files
+        run: |
+          echo "🔧 Fixing asset paths in CSS files..."
+          # Исправляем url() в CSS
+          find out -name "*.css" -exec sed -i \
+            's|url(/|url(./|g; \
+             s|url("/|url("./|g; \
+             s|url(\'/|url(\'./|g' {} \; 2>/dev/null || true
+          echo "✅ CSS paths fixed"
+      
+      - name: Verify fixed paths
+        run: |
+          echo "🔍 Verifying fixed paths..."
           
-          # Проверяем что CSS файлы созданы
+          # Проверяем HTML
+          if grep -q 'href="./_next/' out/index.html 2>/dev/null; then
+            echo "✅ HTML has relative paths"
+          else
+            echo "❌ HTML still has absolute paths"
+            echo "Sample:"
+            grep -o 'href="[^"]*\.css"' out/index.html | head -2
+          fi
+          
+          # Проверяем CSS файлы
           if [ -d "out/_next/static/css" ]; then
-            echo "✅ CSS files found:"
-            ls out/_next/static/css/
+            CSS_COUNT=$(ls out/_next/static/css/*.css 2>/dev/null | wc -l)
+            echo "✅ Found $CSS_COUNT CSS files"
           fi
       
-      - name: Add .nojekyll file
+      - name: Create .nojekyll file
         run: |
-          # GitHub Pages требует .nojekyll для Next.js
+          # Важно для Next.js на GitHub Pages
           touch out/.nojekyll
-          echo "📄 Created .nojekyll file"
+          echo "📄 Created .nojekyll file in output"
       
       - name: Restore API routes
         if: always()
         run: |
           if [ -d "app/_api_temp" ]; then
-            echo "📁 Restoring API routes..."
             mv app/_api_temp app/api
           fi
       
-      - name: Upload artifact to GitHub Pages
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
@@ -98,3 +124,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      
+      - name: Show deployment info
+        run: |
+          echo "🚀 Deployment successful!"
+          echo "🌐 Your site: https://ivan0705.github.io/my-app-next-mysql"
+          echo "⏰ It may take 1-2 minutes to propagate"
