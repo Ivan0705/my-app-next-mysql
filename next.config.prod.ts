@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const nextConfig: NextConfig = {
-  // ВАЖНО: НЕТ output: 'export'!
+  output: 'export',
   
   // Для Vercel не нужны basePath/assetPrefix
   trailingSlash: false,  // Vercel лучше работает с false
