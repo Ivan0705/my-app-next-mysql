@@ -1,37 +1,18 @@
+// next.config.dev.ts - для Vercel и разработки
 import type { NextConfig } from "next";
 import path from "path";
 
-const isProd = process.env.NODE_ENV === 'production';
-const repoName = "my-app-next-mysql";
-
 const nextConfig: NextConfig = {
-  output: 'export',
+  // ВАЖНО: НЕТ output: 'export'!
   
-  // КРИТИЧЕСКИ ВАЖНО для GitHub Pages:
-  basePath: isProd ? `/${repoName}` : '',
-  assetPrefix: isProd ? `/${repoName}/` : '',
-  
-  trailingSlash: true,
+  // Для Vercel не нужны basePath/assetPrefix
+  trailingSlash: false,  // Vercel лучше работает с false
   images: {
-    unoptimized: true,
+    unoptimized: false,  // Vercel оптимизирует изображения
   },
-  
-  // Добавьте это для исправления CSS путей:
-  experimental: {
-    // Это заставляет Next.js использовать правильные пути
-    turbo: {
-      resolveAlias: {
-        // Принудительно используем относительные пути
-      }
-    }
-  },
-  
-  webpack: (config, { isServer }) => {
-    // Исправляем пути для статических файлов
-    if (!isServer) {
-      config.output.publicPath = `./_next/`;
-    }
-    
+  reactStrictMode: true,
+
+  webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
       "@": path.resolve(__dirname),
@@ -41,7 +22,11 @@ const nextConfig: NextConfig = {
       "@processes": path.resolve(__dirname, "processes"),
       "@entities": path.resolve(__dirname, "@entities"),
     };
-    
+
+    config.resolve.extensions = [
+      ".js", ".jsx", ".ts", ".tsx", ".json", ".css", ".scss",
+    ];
+
     return config;
   },
 };
