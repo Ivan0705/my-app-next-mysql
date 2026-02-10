@@ -9,8 +9,7 @@
 import sys
 import re
 import time
-from typing import List, Dict, Any, Optional
-from pathlib import Path
+from typing import List, Dict, Any
 
 # ==================== ВСТРОЕННЫЙ ПРИМЕР SQL ====================
 

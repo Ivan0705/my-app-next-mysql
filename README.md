@@ -1,36 +1,262 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SQL Dialect Converter
 
-## Getting Started
+**Понятный инструмент для преобразования SQL кода между разными базами данных с визуальными подсказками**
 
-First, run the development server:
+**[Попробовать онлайн бесплатно](https://my-app-next-mysql.vercel.app/)** | **[Исходный код](https://github.com/Ivan0705/my-app-next-mysql)**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Важное ограничение
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Текущая версия работает только с MySQL как исходным диалектом!**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Это означает, что вы можете конвертировать только **из MySQL в другие системы**.  
+В будущих версиях мы планируем добавить поддержку других исходных диалектов.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## В двух словах
 
-## Learn More
+Этот инструмент помогает **преобразовывать SQL-код** (язык для работы с базами данных) из **MySQL** в другие системы:
 
-To learn more about Next.js, take a look at the following resources:
+- ✅ **Из MySQL → в PostgreSQL**
+- ✅ **Из MySQL → в BigQuery**  
+- ✅ **Из MySQL → в другие 5+ систем**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Что особенного:** Вместо просто замены текста, инструмент **показывает и объясняет все изменения**.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Пошаговая инструкция
 
-## Deploy on Vercel
+### Шаг 1: Выберите целевую базу данных
+- Нажмите на выпадающий список **"Target Database"**
+- Выберите нужную СУБД: PostgreSQL, Snowflake, BigQuery, Oracle, SQL Server, SQLite или RedShift
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Шаг 2: Загрузите SQL файл
+- Нажмите кнопку **"Upload SQL Files"**
+- Выберите ваш `.sql` файл (поддерживаются также `.txt` файлы)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**После загрузки появятся:**
+- ✅ Красная кнопка **"Clear All"** — удалить все файлы
+- ✅ Красная кнопка **"✕"** рядом с каждым файлом — удалить конкретный файл
+- ✅ Автоматический анализ файла (количество строк, сложность)
+
+### Шаг 3: Конвертируйте файл
+- Нажмите кнопку **"Convert to [выбранная СУБД]"**
+- Подождите завершения конвертации (обычно несколько секунд)
+
+### Шаг 4: Сохраните результат
+**После успешной конвертации появится:**
+- ✅ Кнопка **"Save Converted File"** — скачать преобразованный SQL
+- ✅ Визуальное сравнение — оригинал слева, результат справа
+- ✅ Подсветка изменений — цветом показаны все изменения
+- ✅ Keyword Connections — связи между изменёнными конструкциями
+
+## Для кого это нужно?
+
+### Разработчики
+- При миграции **с MySQL** на другие базы данных
+- Для подготовки SQL-скриптов для разных сред
+- Чтобы понять различия между MySQL и другими системами
+
+### Аналитики данных
+- При переносе запросов **из MySQL** в другие системы анализа
+- Для стандартизации SQL в команде
+- Для документирования преобразований
+
+### Преподаватели и студенты
+- Для изучения различий между **MySQL и другими SQL системами**
+- Для проверки совместимости домашних заданий
+- Для демонстрации миграционных сценариев
+
+## Главные особенности
+
+### 1. Визуальная подсветка изменений
+Инструмент **цветом показывает**, что изменилось:
+
+- ** Красный с зачёркиванием** — удалено или не поддерживается
+- ** Зелёный** — добавлено в новой системе
+- ** Телесный цвет** — изменено (например, `AUTO_INCREMENT` → `IDENTITY(1,1)`)
+
+**Просто наведите курсор** на любой выделенный элемент, чтобы увидеть объяснение.
+
+### 2. Умные связи (Keyword Connections)
+Система автоматически находит и показывает связи между изменёнными конструкциями:
+Связи (mysql → mssql)
+5 связей найдено
+
+⇄ AUTO_INCREMENT → IDENTITY(1,1)
+Исходная строка(Orig): 3 / Результирующая(Conv): 3
+↳ Автоинкремент преобразован для SQL Server
+
+
+### 3. Мгновенное скачивание
+- **Один клик** — получаете готовый SQL-файл
+- **Автоматическое именование**: `converted_to_postgresql.sql`
+- **Чистый, отформатированный код**
+
+## Попробовать онлайн
+
+Просто откройте одну из демо-версий и начните конвертировать:
+
+| Демо | Ссылка | Для чего |
+|------|--------|----------|
+| **Основная версия** | [my-app-next-mysql.vercel.app](https://my-app-next-mysql.vercel.app/) | Самая быстрая, рекомендуем |
+| **Статическая версия** | [ivan0705.github.io/my-app-next-mysql](https://ivan0705.github.io/my-app-next-mysql/) | Всегда доступна |
+| **Код на GitHub** | [github.com/Ivan0705/my-app-next-mysql](https://github.com/Ivan0705/my-app-next-mysql) | Для разработчиков |
+
+## Примеры для тестирования
+
+### Тестовый SQL файл из проекта:
+**[test_complex_example.sql](https://github.com/Ivan0705/my-app-next-mysql/blob/main/scripts/sqlglot/test_complex_example.sql)** — именно этот файл использовался для тестирования всех диалектов
+
+Этот файл содержит комплексные SQL-конструкции для проверки работы конвертера:
+- Создание таблиц с разными типами данных
+- Сложные JOIN запросы
+- Оконные функции
+- Рекурсивные CTE
+- Подзапросы
+
+### Пример для быстрого тестирования:
+```sql
+-- Простой пример для тестирования
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+Python скрипт для командной строки:
+hybrid_transpiler_demo.py — посмотрите исходный код Python-скрипта
+
+Поддерживаемые системы
+Исходный диалект: MySQL → Целевой диалект:
+
+Система	Кнопка в интерфейсе	Особенности
+PostgreSQL	Convert to PostgreSQL	GENERATED BY DEFAULT AS IDENTITY, TIMESTAMPTZ
+SQL Server	Convert to SQL Server	IDENTITY(1,1), DATETIME2, GETDATE()
+BigQuery	Convert to BigQuery	STRING, NUMERIC, нет поддержки FOREIGN KEY
+Snowflake	Convert to Snowflake	NUMBER, AUTOINCREMENT, TIMESTAMP_NTZ
+Oracle	Convert to Oracle	VARCHAR2, NUMBER, SYSTIMESTAMP
+SQLite	Convert to SQLite	TEXT, REAL, PRAGMA foreign_keys = ON
+Redshift	Convert to Redshift	IDENTITY(1,1), TIMESTAMP, GETDATE()
+Два способа использования
+
+1. Веб-интерфейс (рекомендуем)
+Простой интерфейс с кнопками и визуализацией:
+
+Загрузка файлов через кнопку "Upload SQL Files"
+
+Конвертация через кнопку "Convert to..."
+
+Скачивание через кнопку "Save Converted File"
+
+2. Командная строка (для разработчиков)
+bash
+# Перейдите в папку с Python-скриптом
+cd scripts/sqlglot
+
+# Установите зависимости
+pip install sqlglot
+
+# Запустите конвертацию
+python hybrid_transpiler_demo.py convert postgres
+python hybrid_transpiler_demo.py convert bigquery
+Доступные npm-команды:
+json
+{
+  "test:postgres": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert postgres",
+  "test:bigquery": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert bigquery",
+  "test:snowflake": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert snowflake",
+  "test:oracle": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert oracle",
+  "test:mssql": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert mssql",
+  "test:sqlite": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert sqlite",
+  "test:redshift": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert redshift",
+  "test:all": "cd scripts/sqlglot && python hybrid_transpiler_demo.py all"
+}
+
+Структура проекта
+
+my-app-next-mysql/
+├── src/features/                  # Основные функции
+│   ├── sql-converter/             # Конвертация SQL (только MySQL → другие)
+│   ├── sql-analysis/              # Анализ SQL
+│   └── sql-diff/                  # Сравнение различий
+├── src/widgets/                   # Визуальные компоненты
+│   ├── dialect-comparison/        # Сравнение систем
+│   ├── file-manager/              # Управление файлами (главный интерфейс)
+│   └── sql-syntax-highlighter/    # Подсветка изменений
+├── scripts/sqlglot/               # Python + SQLGlot скрипты
+│   └── hybrid_transpiler_demo.py  # Гибридный конвертер (MySQL → другие)
+└── src/shared/                    # Общие компоненты
+
+Будущие планы
+Мы работаем над улучшением инструмента:
+
+План развития:
+Поддержка других исходных диалектов — не только MySQL, но и PostgreSQL, SQL Server и другие
+
+WebAssembly интеграция — запуск Python в браузере
+
+Electron приложение — десктоп-версия с полной поддержкой SQL
+
+Облачный API — обработка сложных запросов на сервере
+
+Что будет добавлено:
+✅ Любой исходный диалект → любой целевой диалект
+
+✅ Офлайн-работа без интернета
+
+✅ Максимальная производительность для сложных конвертаций
+
+Как помочь проекту
+Мы рады любой помощи! Вот как можно внести вклад:
+
+Для Python разработчиков
+Добавление других исходных диалектов — поддержка PostgreSQL, SQL Server и т.д.
+
+Улучшение SQLGlot интеграции — оптимизация сложных запросов
+
+Создание WebAssembly сборки — Python в браузере
+
+Для React/TypeScript разработчиков
+Добавление выбора исходного диалекта — не только MySQL
+
+Новые визуальные компоненты — улучшение интерфейса
+
+Интеграция с Electron — десктоп-приложение
+
+Оптимизация производительности — быстрая работа с большими файлами
+
+Простой процесс:
+bash
+# 1. Сделайте копию проекта
+# 2. Создайте ветку
+git checkout -b feature/новая-фича
+
+# 3. Добавьте изменения
+git commit -m 'Добавил новую фичу'
+
+# 4. Отправьте изменения
+git push origin feature/новая-фича
+
+# 5. Откройте Pull Request
+Лицензия
+Этот проект лицензирован под MIT License — можете свободно использовать, изучать и модифицировать код.
+
+Благодарности
+**[SQLGlot](https://sqlglot.com/sqlglot.html)** — Мощный парсер SQL на Python, основа для будущих улучшений
+
+Vercel — За отличную платформу для хостинга
+
+Сообщество — За идеи и обратную связь
+
+Контакты и поддержка
+Вопросы и предложения: GitHub Issues
+
+Демо: my-app-next-mysql.vercel.app
+
+Код: github.com/Ivan0705/my-app-next-mysql
+
+Если проект полезен — поставьте звезду на GitHub!
+
+Попробуйте прямо сейчас: my-app-next-mysql.vercel.app
+
+Сделано с ❤️ для сообщества разработчиков баз данных
