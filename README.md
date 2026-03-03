@@ -1,126 +1,157 @@
+
 # SQL Dialect Converter
+**An intuitive tool for converting SQL code between different databases with visual hints**
 
-**Понятный инструмент для преобразования SQL кода между разными базами данных с визуальными подсказками**
+**[Try Online Free](https://my-app-next-mysql.vercel.app/)** | **[Source code](https://github.com/Ivan0705/my-app-next-mysql)**
 
-**[Попробовать онлайн бесплатно](https://my-app-next-mysql.vercel.app/)** | **[Исходный код](https://github.com/Ivan0705/my-app-next-mysql)**
+---
 
-## Важное ограничение
+## Hello!
+My name is **Ivan Vishnevskiy**. I'm the developer of this tool.
 
-**Текущая версия работает только с MySQL как исходным диалектом!**
+I created it because my acquaintances faced database migration issues, and I wanted to make this process simpler and more visual.
 
-Это означает, что вы можете конвертировать только **из MySQL в другие системы**.  
-В будущих версиях мы планируем добавить поддержку других исходных диалектов.
+Currently, this is my pet project that I'm building with passion. It doesn't have users yet and isn't generating revenue — but it has potential.
 
-## В двух словах
+---
 
-Этот инструмент помогает **преобразовывать SQL-код** (язык для работы с базами данных) из **MySQL** в другие системы:
+## 🎯 Why I'm Sharing This
+I'm exploring my path and open to different opportunities:
 
-- ✅ **Из MySQL → в PostgreSQL**
-- ✅ **Из MySQL → в BigQuery**  
-- ✅ **Из MySQL → в другие 5+ систем**
+🔍 **Looking for like-minded people** — to develop the project further together
 
-**Что особенного:** Вместо просто замены текста, инструмент **показывает и объясняет все изменения**.
+💡 **Open to ideas** — on how to make this tool useful for people
 
-## Пошаговая инструкция
+🤝 **Want to find a co-founder** — who complements me in areas I'm not skilled in (marketing, sales, business)
 
-### Шаг 1: Выберите целевую базу данных
-- Нажмите на выпадающий список **"Target Database"**
-- Выберите нужную СУБД: PostgreSQL, Snowflake, BigQuery, Oracle, SQL Server, SQLite или RedShift
+💼 **Considering job offers** — if my code and approach resonate with you
 
-### Шаг 2: Загрузите SQL файл
-- Нажмите кнопку **"Upload SQL Files"**
-- Выберите ваш `.sql` файл (поддерживаются также `.txt` файлы)
+If any of this resonates with you — let's just talk. No obligations, no pretense.
 
-**После загрузки появятся:**
-- ✅ Красная кнопка **"Clear All"** — удалить все файлы
-- ✅ Красная кнопка **"✕"** рядом с каждым файлом — удалить конкретный файл
-- ✅ Автоматический анализ файла (количество строк, сложность)
+## 💼 Why This Might Be Interesting for Partnership
+|       What I Offer	        |    What I'm Looking for in a Partner
+|-------------------------------|--------------------------------------|
+| Ready working product	        |  Experience in marketing and sales
+| Clean code (React + Python)	|  Monetization ideas
+| Intuitive UI/UX	            |  Access to international market
+| Technical expertise	        |  Desire to grow a business
+| Openness to ideas	            |  Energy and drive
 
-### Шаг 3: Конвертируйте файл
-- Нажмите кнопку **"Convert to [выбранная СУБД]"**
-- Подождите завершения конвертации (обычно несколько секунд)
+**Partnership format**: Discussed individually (50/50 or other options)
 
-### Шаг 4: Сохраните результат
-**После успешной конвертации появится:**
-- ✅ Кнопка **"Save Converted File"** — скачать преобразованный SQL
-- ✅ Визуальное сравнение — оригинал слева, результат справа
-- ✅ Подсветка изменений — цветом показаны все изменения
-- ✅ Keyword Connections — связи между изменёнными конструкциями
+---
 
-## Для кого это нужно?
+## 📫 Contact Me
+- 📧 **Email**: [vipanda569@mail.ru]
+- 💬 **Telegram**: [@IvanCherry0705] (fastest response here)
+- 📱 **WhatsApp**: +7(953) 806-95-39
+- 🐙 **GitHub**: github.com/Ivan0705
 
-### Разработчики
-- При миграции **с MySQL** на другие базы данных
-- Для подготовки SQL-скриптов для разных сред
-- Чтобы понять различия между MySQL и другими системами
+---
 
-### Аналитики данных
-- При переносе запросов **из MySQL** в другие системы анализа
-- Для стандартизации SQL в команде
-- Для документирования преобразований
+## 📋 About the Product
+## ⚠️ Important Limitation
+**The current version only works with MySQL as the source dialect!**
 
-### Преподаватели и студенты
-- Для изучения различий между **MySQL и другими SQL системами**
-- Для проверки совместимости домашних заданий
-- Для демонстрации миграционных сценариев
+This means you can only convert **from MySQL to other systems**.
+In future versions, I plan to add support for other source dialects.
 
-## Главные особенности
+---
 
-### 1. Визуальная подсветка изменений
-Инструмент **цветом показывает**, что изменилось:
+## In a Nutshell
+This tool helps **convert SQL code** from **MySQL** to other systems:
 
-- ** Красный с зачёркиванием** — удалено или не поддерживается
-- ** Зелёный** — добавлено в новой системе
-- ** Телесный цвет** — изменено (например, `AUTO_INCREMENT` → `IDENTITY(1,1)`)
+- ✅ **From MySQL → to PostgreSQL**
+- ✅ **From MySQL → to BigQuery**
+- ✅ **From MySQL → to 5+ other systems**
 
-**Просто наведите курсор** на любой выделенный элемент, чтобы увидеть объяснение.
+**What's special:** Instead of just text replacement, the tool **shows and explains all changes**.
 
-### 2. Умные связи (Keyword Connections)
-Система автоматически находит и показывает связи между изменёнными конструкциями:
-Связи (mysql → mssql)
-5 связей найдено
+---
+
+## 📖 Step-by-Step Instructions
+### Step 1: Select Your Target Database
+- Click the **"Target Database"** dropdown
+- Choose your desired DBMS: PostgreSQL, Snowflake, BigQuery, Oracle, SQL Server, SQLite, or RedShift
+
+### Step 2: Upload SQL File
+- Click the **"Upload SQL Files"** button
+- Select your `.sql` file (`.txt` files are also supported)
+
+**After upload, you'll see:**
+- ✅ **"Clear All"** red button — delete all files
+- ✅ **"✕"** red button next to each file — delete specific file
+- ✅ Automatic file analysis (line count, complexity)
+
+### Step 3: Convert the File
+- Click the **"Convert to [selected DBMS]"** button
+- Wait for conversion to complete (usually a few seconds)
+
+### Step 4: Save the Result
+**After successful conversion, you'll see:**
+- ✅ **"Save Converted File"** button — download the converted SQL
+- ✅ Visual comparison — original on the left, result on the right
+- ✅ Change highlighting — all modifications shown in color
+- ✅ Keyword Connections — links between modified constructs
+
+---
+
+## Who Is This For?
+### Developers
+- When migrating **from MySQL** to other databases
+- For preparing SQL scripts for different environments
+- To understand differences between MySQL and other systems
+
+### Data Analysts
+- When transferring queries **from MySQL** to other analytics systems
+- For standardizing SQL within teams
+- For documenting transformations
+
+### Teachers and Students
+- For studying differences **between MySQL and other SQL systems**
+- For checking homework compatibility
+- For demonstrating migration scenarios
+
+## Key Features
+### 1. Visual Change Highlighting
+The tool **shows what changed with colors**:
+- **Red with strikethrough** — removed or unsupported
+- **Green** — added in the new system
+- **Peach color** — modified (e.g., `AUTO_INCREMENT` → `IDENTITY(1,1)`)
+**Just hover over** any highlighted element to see an explanation.
+
+### 2. Smart Connections (Keyword Connections)
+The system automatically finds and shows connections between modified constructs:
+
+Connections (mysql → mssql)
+5 connections found
 
 ⇄ AUTO_INCREMENT → IDENTITY(1,1)
-Исходная строка(Orig): 3 / Результирующая(Conv): 3
-↳ Автоинкремент преобразован для SQL Server
+Orig line: 3 / Conv line: 3
+↳ Auto-increment converted for SQL Server
 
+### 3. Instant Download
+- **One click** — get your ready-to-use SQL file
+- **Automatic naming**: converted_to_postgresql.sql
+- **Clean, formatted code**
 
-### 3. Мгновенное скачивание
-- **Один клик** — получаете готовый SQL-файл
-- **Автоматическое именование**: `converted_to_postgresql.sql`
-- **Чистый, отформатированный код**
-
-Просто откройте одну из демо-версий и начните конвертировать:
-
-## 🌐 Попробовать онлайн
-
-### 🚀 Основная версия
+## 🌐 Try It Online
+### 🚀 Main Version
 **[my-app-next-mysql.vercel.app](https://my-app-next-mysql.vercel.app/)**  
-✨ Самая быстрая, рекомендуем для первого знакомства
+✨ Fastest, recommended for first try
 
-### 🌍 Статическая версия  
-**[ivan0705.github.io/my-app-next-mysql](https://ivan0705.github.io/my-app-next-mysql/)**  
-📌 Всегда доступна, работает на GitHub Pages
+### 🌍 Static Version
+**[ivan0705.github.io/my-app-next-mysql](https://ivan0705.github.io/my-app-next-mysql/)** 
+📌 Always available, runs on GitHub Pages
 
-### 📦 Исходный код
-**[github.com/Ivan0705/my-app-next-mysql](https://github.com/Ivan0705/my-app-next-mysql)**  
-💻 Для разработчиков, контрибьюторов и изучения кода
+### 📦 Source Code
+**[github.com/Ivan0705/my-app-next-mysql](https://github.com/Ivan0705/my-app-next-mysql)** 
+💻 For developers, contributors, and code exploration
 
-## Примеры для тестирования
-
-### Тестовый SQL файл из проекта:
-**[test_complex_example.sql](https://github.com/Ivan0705/my-app-next-mysql/blob/main/scripts/sqlglot/test_complex_example.sql)** — именно этот файл использовался для тестирования всех диалектов
-
-Этот файл содержит комплексные SQL-конструкции для проверки работы конвертера:
-- Создание таблиц с разными типами данных
-- Сложные JOIN запросы
-- Оконные функции
-- Рекурсивные CTE
-- Подзапросы
-
-### Пример для быстрого тестирования:
+## Test Examples
+### Quick Test Example:
 ```sql
--- Простой пример для тестирования
+-- Simple test example
 CREATE TABLE customers (
     customer_id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(50) NOT NULL,
@@ -129,164 +160,85 @@ CREATE TABLE customers (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-### 📄 Новый пример для тестирования
-**[medium-test.sql](https://github.com/Ivan0705/my-app-next-mysql/public/sql-examples/medium-test.sql)** — специально подготовленный файл средней сложности
-
-Python скрипт для командной строки:
-hybrid_transpiler_demo.py — посмотрите исходный код Python-скрипта
-
-## Поддерживаемые системы
-**Исходный диалект: MySQL → Целевой диалект:**
-
-|    Система     |    Кнопка в интерфейс   |                    Особенности                    |
-|----------------|-------------------------|---------------------------------------------------|
-| **PostgreSQL** | `Convert to PostgreSQL` | `GENERATED BY DEFAULT AS IDENTITY`, `TIMESTAMPTZ` |
-| **SQL Server** | `Convert to SQL Server` | `IDENTITY(1,1)`, `DATETIME2`, `GETDATE()`         |
-| **BigQuery**   | `Convert to BigQuery`   | `STRING`, `NUMERIC`, нет поддержки `FOREIGN KEY`  |
-| **Snowflake**  | `Convert to Snowflake`  | `NUMBER`, `AUTOINCREMENT`, `TIMESTAMP_NTZ`        |
-| **Oracle**     | `Convert to Oracle`     | `VARCHAR2`, `NUMBER`, `SYSTIMESTAMP`              |
-| **SQLite**     | `Convert to SQLite`     | `TEXT`, `REAL`, `PRAGMA foreign_keys = ON`        |
-| **Redshift**   | `Convert to Redshift`   | `IDENTITY(1,1)`, `TIMESTAMP`, `GETDATE()`         |
-
-## Два способа использования
-
-### 1. Веб-интерфейс (рекомендуем)
-Простой интерфейс с кнопками и визуализацией:
-
--**Загрузка файлов через кнопку "Upload SQL Files"
-
--**Конвертация через кнопку "Convert to..."
-
--**Скачивание через кнопку "Save Converted File"
-
-### 2. Командная строка (для разработчиков)
-```bash
-# Перейдите в папку с Python-скриптом
-cd scripts/sqlglot
-
-# Установите зависимости
-pip install sqlglot
-
-# Запустите конвертацию
-python hybrid_transpiler_demo.py convert postgres
-python hybrid_transpiler_demo.py convert bigquery
-```
-### Доступные npm-команды:
-json
-{
-  "test:postgres": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert postgres",
-  "test:bigquery": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert bigquery",
-  "test:snowflake": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert snowflake",
-  "test:oracle": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert oracle",
-  "test:mssql": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert mssql",
-  "test:sqlite": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert sqlite",
-  "test:redshift": "cd scripts/sqlglot && python hybrid_transpiler_demo.py convert redshift",
-  "test:all": "cd scripts/sqlglot && python hybrid_transpiler_demo.py all"
-}
-
-Структура проекта
+Project Structure
 
 my-app-next-mysql/
-├── 📂 src/
-│   ├── 📂 features/                          # Основные функции
-│   │   ├── 📂 sql-converter/                  # Конвертация SQL (только MySQL → другие)
-│   │   ├── 📂 sql-analysis/                   # Анализ SQL
-│   │   └── 📂 sql-diff/                       # Сравнение различий
-│   │
-│   ├── 📂 widgets/                           # Визуальные компоненты
-│   │   ├── 📂 dialect-comparison/             # Сравнение систем
-│   │   ├── 📂 file-manager/                   # Управление файлами (главный интерфейс)
-│   │   └── 📂 sql-syntax-highlighter/         # Подсветка изменений
-│   │
-│   └── 📂 shared/                            # Общие компоненты
-│       ├── 📂 lib/                             # Библиотеки и утилиты
-│       ├── 📂 types/                            # TypeScript типы
-│       ├── 📂 ui/                               # Переиспользуемые UI компоненты
-│       └── 📂 utils/                            # Вспомогательные функции
-│
-├── 📂 public/                                 # Статические файлы
-│   └── 📂 sql-examples/                       # Примеры SQL файлов
-│       └── 📄 medium-test.sql                   # Тестовый SQL пример
-│
-├── 📂 scripts/
-│   └── 📂 sqlglot/                            # Python + SQLGlot скрипты
-│       ├── 📄 hybrid_transpiler_demo.py        # Гибридный конвертер (MySQL → другие)
-│       └── 📄 test_complex_example.sql         # Комплексный тестовый SQL
-│
-├── 📄 package.json                             # Зависимости проекта
-├── 📄 README.md                                # Документация
-└── 📄 vercel.json                              # Конфигурация для Vercel
+├── src/
+│   ├── features/                   # Core functionality
+│   │   ├── sql-converter/          # SQL conversion (MySQL → others only)
+│   │   ├── sql-analysis/           # SQL analysis
+│   │   └── sql-diff/               # Difference comparison
+│   ├── widgets/                    # Visual components
+│   │   ├── dialect-comparison/     # System comparison
+│   │   ├── file-manager/           # File management (main interface)
+│   │   └── sql-syntax-highlighter/ # Change highlighting
+│   └── shared/                     # Shared components
+├── scripts/
+│   └── sqlglot/                    # Python + SQLGlot scripts
+│       └── hybrid_transpiler_demo.py
+└── public/
+    └── sql-examples/               # SQL file examples
 
-Будущие планы
-Мы работаем над улучшением инструмента:
+Command Line (for Developers)
+bash
+# Navigate to Python script folder
+cd scripts/sqlglot
 
-План развития:
-Поддержка других исходных диалектов — не только MySQL, но и PostgreSQL, SQL Server и другие
+# Install dependencies
+pip install sqlglot
 
-WebAssembly интеграция — запуск Python в браузере
+# Run conversion
+python hybrid_transpiler_demo.py convert postgres
+python hybrid_transpiler_demo.py convert bigquery
+What's Next?
+I don't know what this project will grow into. Maybe:
 
-Electron приложение — десктоп-версия с полной поддержкой SQL
+A useful tool for developers
 
-Облачный API — обработка сложных запросов на сервере
+A commercial product
 
-Что будет добавлено:
-✅ Любой исходный диалект → любой целевой диалект
+A portfolio piece for an interesting job
 
-✅ Офлайн-работа без интернета
+Or just remain a learning example
 
-✅ Максимальная производительность для сложных конвертаций
+If you have ideas or suggestions — I'm open to dialogue.
 
-Как помочь проекту
-Мы рады любой помощи! Вот как можно внести вклад:
+How to Help the Project
+Star it — it feels good and helps find like-minded people
 
-Для Python разработчиков
-Добавление других исходных диалектов — поддержка PostgreSQL, SQL Server и т.д.
+Found a bug? Create an Issue on GitHub
 
-Улучшение SQLGlot интеграции — оптимизация сложных запросов
+Have an idea? Write to me, let's discuss
 
-Создание WebAssembly сборки — Python в браузере
+Want to help with code? I'd welcome Pull Requests
 
-Для React/TypeScript разработчиков
-Добавление выбора исходного диалекта — не только MySQL
+bash
+# How to contribute
+git checkout -b feature/your-idea
+git commit -m 'Add your idea'
+git push origin feature/your-idea
+# Then open a Pull Request
+License
+MIT License — feel free to use, study, and modify the code.
 
-Новые визуальные компоненты — улучшение интерфейса
+🙏 Acknowledgments
+SQLGlot — powerful SQL parser for Python
 
-Интеграция с Electron — десктоп-приложение
+Vercel — for the excellent hosting platform
 
-Оптимизация производительности — быстрая работа с большими файлами
+My acquaintances — for sharing their problem and inspiring the creation of this tool
 
-Простой процесс:
-```bash
-# 1. Сделайте копию проекта
-# 2. Создайте ветку
-git checkout -b feature/новая-фича
+Let's Connect
+If you've read this far and what I'm doing resonates with you — write to me. No reason needed, just to connect.
 
-# 3. Добавьте изменения
-git commit -m 'Добавил новую фичу'
+Email: vipanda569@mail.ru
 
-# 4. Отправьте изменения
-git push origin feature/новая-фича
+Telegram: `[@IvanCherry0705](https://t.me/IvanCherry0705)` or +7(953)-806-95-39 (fastest response here)
 
-# 5. Откройте Pull Request```
-Лицензия
-Этот проект лицензирован под MIT License — можете свободно использовать, изучать и модифицировать код.
+GitHub: github.com/Ivan0705
 
-Благодарности
-**[SQLGlot](https://sqlglot.com/sqlglot.html)** — Мощный парсер SQL на Python, основа для будущих улучшений
+Try It Online →
 
-Vercel — За отличную платформу для хостинга
+Made with ❤️ for those facing database migrations
+© 2026 Ivan Vishnevskiy
 
-Сообщество — За идеи и обратную связь
-
-Контакты и поддержка
-Вопросы и предложения: GitHub Issues
-
-Демо: my-app-next-mysql.vercel.app
-
-Код: github.com/Ivan0705/my-app-next-mysql
-
-Если проект полезен — поставьте звезду на GitHub!
-
-Попробуйте прямо сейчас: my-app-next-mysql.vercel.app
-
-Сделано с ❤️ для сообщества разработчиков баз данных
